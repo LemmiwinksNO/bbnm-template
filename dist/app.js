@@ -1,0 +1,1 @@
+define(["backbone.layoutmanager","bootstrap"],function(){var e={root:"/"},t=window.JST=window.JST||{};return _.extend(e,{module:function(e){return _.extend({Views:{}},e)},useLayout:function(e,t){_.isObject(e)&&(t=e),t=t||{},_.isString(e)&&(t.template=e);var n=new Backbone.Layout(_.extend({el:"#main"},t));return this.layout=n}},Backbone.Events)});
