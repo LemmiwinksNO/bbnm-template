@@ -1,1 +1,0 @@
-require(["app","router"],function(e,t){e.router=new AppRouter,Backbone.history.start({pushState:!0,root:e.root}),$(document).on("click","a[href]:not([data-bypass])",function(t){var n={prop:$(this).prop("href"),attr:$(this).attr("href")},r=location.protocol+"//"+location.host+e.root;n.prop.slice(0,r.length)===r&&(t.preventDefault(),Backbone.history.navigate(n.attr,!0))})});

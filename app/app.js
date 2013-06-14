@@ -20,7 +20,7 @@ function() {
   };
 
   // Localize or create a new JavaScript Template object.
-  var JST = window.JST = window.JST || {};
+  // var JST = window.JST = window.JST || {};
 
   // // Configure LayoutManager with Backbone Boilerplate defaults.
   // Backbone.Layout.configure({
