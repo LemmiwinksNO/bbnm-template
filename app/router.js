@@ -3,10 +3,10 @@ define([
   "app",
 
   // Modules.
-  "modules/MyTodo"
+  "modules/todo"
 ],
 
-function(app, MyTodo){
+function(app, Todo){
     var Router = Backbone.Router.extend({
         routes: {
             // Pages
@@ -19,9 +19,9 @@ function(app, MyTodo){
 
         mytodo: function(){
 
-            var list = new MyTodo.Collection();
+            var list = new Todo.Collection();
 
-            App = new MyTodo.Views.List({
+            App = new Todo.Views.List({
                 collection: list
             });
 

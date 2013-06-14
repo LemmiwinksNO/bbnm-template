@@ -1,29 +1,29 @@
 define([
+  // Application
   "app",
 
-  // Libs
-  "backbone",
+  // libs? Like jQuery, backbone, underscore. Why don't we have to add those here?
 
   // Views
-  "modules/todo/views",
+  'modules/todo/views'
 
-  // Plugins
-  "backbone-localstorage"
-],
+], function(app, Views){
 
-function(app, Backbone, Views) {
-
-  // Create a new module
   var Todo = app.module();
+
 
   // Todo Model
   // ----------
 
-  // Our basic **Todo** model has `content` and `done` attributes.
+  // Our basic **Todo** model has `text`, `order`, and `done` attributes.
   Todo.Model = Backbone.Model.extend({
-    // Default attributes for the todo.
-    defaults: {
-      done: false
+      idAttribute: "_id",
+
+    // Default attributes for a todo item.
+    defaults: function() {
+      return {
+        done:  false
+      };
     },
 
     // Toggle the `done` state of this todo item.
@@ -31,38 +31,26 @@ function(app, Backbone, Views) {
       this.save({
         done: !this.get("done")
       });
-    },
-
-    // Remove this Todo from *localStorage* and delete its view.
-    clear: function() {
-      this.destroy();
-    },
-
-    // Ensure some content has been filled in
-    validate: function(attrs) {
-      if (!attrs.content) {
-        return "Missing content for todo item.";
-      }
     }
+
   });
 
   // Todo Collection
   // ---------------
 
-  // The collection of todos is backed by *localStorage* instead of a remote
-  // server.
-  Todo.List = Backbone.Collection.extend({
+  // The collection of todos used to be backed by *localStorage* instead of a remote
+  // server, but now uses our /api/todos backend for persistance.
+  Todo.Collection = Backbone.Collection.extend({
+
     // Reference to this collection's model.
     model: Todo.Model,
 
     // Save all of the todo items under the `"todos"` namespace.
-    localStorage: new Store("todos-backbone"),
+    url: '/api/todos',
 
     // Filter down the list of all todo items that are finished.
     done: function() {
-      return this.filter(function(todo) {
-        return todo.get("done");
-      });
+      return this.filter(function(todo){ return todo.get('done'); });
     },
 
     // Filter down the list to only todo items that are still not finished.
@@ -73,26 +61,26 @@ function(app, Backbone, Views) {
     // We keep the Todos in sequential order, despite being saved by unordered
     // GUID in the database. This generates the next order number for new items.
     nextOrder: function() {
-      if (!this.length) {
-        return 1;
-      }
-
-      return this.last().get("order") + 1;
+      if (!this.length) return 1;
+      return this.last().get('order') + 1;
     },
 
     // Todos are sorted by their original insertion order.
     comparator: function(todo) {
-      return todo.get("order");
+      return todo.get('order');
     }
+
   });
 
-  // Todo Views
-  // ----------
+  // Create our global collection of **Todos**.
+  // Todo.Todos = new Todo.Collection();
 
-  // Attach the Views sub-module into this module.
+
+  // Todo Item View and Todo List View
+  // ---------------------------------
+
   Todo.Views = Views;
 
-  // Required, return the module for AMD compliance
   return Todo;
 
 });
