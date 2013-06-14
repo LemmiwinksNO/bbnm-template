@@ -2,12 +2,15 @@ define([
   // Application
   "app",
 
-  // libs? Like jQuery, backbone, underscore. Why don't we have to add those here?
+  // libs
+  'jquery',
+  'underscore',
+  'backbone',
 
   // Views
   'modules/todo/views'
 
-], function(app, Views){
+], function(app, $, _, Backbone, Views){
 
   var Todo = app.module();
 

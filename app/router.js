@@ -11,16 +11,14 @@ function(app, Todo){
         routes: {
             // Pages
             'mytodo': 'mytodo',
-            '': 'mytodo',
+            ''      : 'mytodo',
 
             // Default - catch all
             '*actions': 'defaultAction'
         },
 
         mytodo: function(){
-
             var list = new Todo.Collection();
-
             App = new Todo.Views.List({
                 collection: list
             });

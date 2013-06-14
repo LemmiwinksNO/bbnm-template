@@ -2,15 +2,15 @@ define([
 
   // Do we need to add libraries? Well backbone.layoutmanager depends on
   // backbone, which depends on underscore and jquery.
-  // 'jquery',
-  // 'underscore',
-  // 'backbone',
+    'jquery',
+    'underscore',
+    'backbone',
 
-  "backbone.layoutmanager",
+  // "backbone.layoutmanager",
   "bootstrap"
 ],
 
-function() {
+function($, _, Backbone) {
 
   // Provide a global location to place configuration settings and module
   // creation.

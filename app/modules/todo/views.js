@@ -2,14 +2,17 @@ define([
     'app',
 
     // libs (needed?)
-    // 'backbone'
+    'jquery',
+    'underscore',
+    'backbone',
+    'handlebars',
 
     // Templates
-    'text!templates/mytodo/main.html',
-    'text!templates/mytodo/stats.html',
-    'text!templates/mytodo/item.html'
+    'text!templates/todo/main.html',
+    'text!templates/todo/stats.html',
+    'text!templates/todo/item.html'
 
-], function(app, MainView, StatsView, ItemView) {
+], function(app, $, _, Backbone, Handlebars, MainView, StatsView, ItemView) {
 
     var Views = {};
 
@@ -20,7 +23,8 @@ define([
 
         tagName: "li",
 
-        template: _.template(ItemView),
+        template: Handlebars.compile(ItemView),
+        // template: _.template(ItemView),
 
         // The DOM events specific to an item.
         events: {
@@ -96,11 +100,13 @@ define([
 
         // // Cache the template function for a single item.
         // template: _.template($('#todo-app').html()),
-        template: _.template(MainView),
+        // template: _.template(MainView),
+        template: Handlebars.compile(MainView),
 
         // Our template for the line of statistics at the bottom of the app.
         // statsTemplate: _.template($('#stats-template').html()),
-        statsTemplate: _.template(StatsView),
+        // statsTemplate: _.template(StatsView),
+        statsTemplate: Handlebars.compile(StatsView),
 
         // Delegated events for creating new items, and clearing completed ones.
         events: {

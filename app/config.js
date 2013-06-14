@@ -10,7 +10,7 @@ require.config({
         'backbone': '../vendor/js/libs/backbone-amd/backbone',
         'handlebars' : '../vendor/js/libs/handlebars/handlebars',
         'backbone.layoutmanager' : '../vendor/js/libs/layoutmanager/backbone.layoutmanager',
-        'text': '../vendor/js/libs/requirejs-text/text'
+        'text' : '../vendor/js/libs/requirejs-text/text'
     },
     shim: {
         'bootstrap': ['jquery'],
@@ -29,6 +29,9 @@ require.config({
                 'underscore'
             ],
             'exports': 'Backbone.LayoutManager'
+        },
+        'handlebars': {
+            exports: 'Handlebars'
         }
     }
 });
