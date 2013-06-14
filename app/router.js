@@ -7,17 +7,23 @@ define([
 ],
 
 function(app, MyTodo){
-    window.AppRouter = Backbone.Router.extend({
+    var Router = Backbone.Router.extend({
         routes: {
             // Pages
             'mytodo': 'mytodo',
+            '': 'mytodo',
 
             // Default - catch all
             '*actions': 'defaultAction'
         },
 
         mytodo: function(){
-            App = new MyTodo.AppView();
+
+            var list = new MyTodo.Collection();
+
+            App = new MyTodo.Views.List({
+                collection: list
+            });
 
         },
 
@@ -27,5 +33,5 @@ function(app, MyTodo){
 
     });
 
-    return {};
+    return Router;
 });

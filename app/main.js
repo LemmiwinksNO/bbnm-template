@@ -10,7 +10,7 @@ function(app, Router) {
 
   // Define your master router on the application namespace and trigger all
   // navigation from this instance.
-  app.router = new AppRouter();
+  app.router = new Router();
 
   // Trigger the initial route and enable HTML5 History API support, set the
   // root folder to '/' by default.  Change in app.js.
@@ -39,41 +39,3 @@ function(app, Router) {
   });
 
 });
-
-
-// (function(){
-//     require.config({
-//         paths: {
-//             'jquery': 'assets/js/libs/jquery/jquery',
-//             'bootstrap': 'assets/js/libs/bootstrap',
-//             'underscore': 'assets/js/libs/underscore-amd/underscore',
-//             'backbone': 'assets/js/libs/backbone-amd/backbone',
-//             'handlebars' : 'assets/js/libs/handlebars/handlebars',
-//             'text': 'assets/js/libs/requirejs-text/text'
-//         },
-//         shim: {
-//             'bootstrap': ['jquery'],
-//             'backbone': {
-//                 // These script dependencies should be loaded before
-//                 // loading backbone.js
-//                 deps: ['underscore', 'jquery'],
-//                 // Once loaded, use the global 'Backbone' as the
-//                 // module value.
-//                 exports: 'Backbone'
-//             },
-//             'handlebars': {
-//                 exports: 'Handlebars'
-//             }
-//         }
-//     });
-
-//     // Start the router
-//     require(['router'],
-//         function(router) {
-//             var Router = new AppRouter();  // start the router
-//             Backbone.history.start();   // Need this for routes to work
-//         }
-//     );
-
-
-// })();
