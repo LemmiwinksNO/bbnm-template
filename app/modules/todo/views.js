@@ -119,9 +119,7 @@ define([
         // collection, when items are added or changed. Kick things off by
         // loading any preexisting todos that might be saved in *localStorage*.
         initialize: function() {
-            // Load up template and stylesheet
             this.$el.html(this.template);
-            // $('head').append('<link rel="stylesheet" href="assets/css/todo.css" />');
 
             this.input = this.$("#new-todo");
 
