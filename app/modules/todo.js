@@ -38,6 +38,7 @@ define([
 
   });
 
+
   // Todo Collection
   // ---------------
 
@@ -74,9 +75,6 @@ define([
     }
 
   });
-
-  // Create our global collection of **Todos**.
-  // Todo.Todos = new Todo.Collection();
 
 
   // Todo Item View and Todo List View

@@ -8,19 +8,19 @@ var app = express();
 // model
 mongoose.connect('mongodb://localhost/my_database');
 
-var todoSchema = mongoose.Schema({
+// Schemas
+var notDoSchema = mongoose.Schema({
+    title: String,
+    status: Number
+});
+var NotDo = mongoose.model('NotDo', notDoSchema);
+
+// Or all in one
+var Todo = mongoose.model('Todo', new mongoose.Schema({
   text: String,
   done: Boolean,
   order: Number
-});
-
-var Todo = mongoose.model('Todo', todoSchema);
-
-// var Todo = mongoose.model('Todo', new mongoose.Schema({
-//   text: String,
-//   done: Boolean,
-//   order: Number
-// }));
+}));
 
 app.configure(function(){
   app.use(express.bodyParser());
@@ -89,7 +89,7 @@ app.delete('/api/todos/:id', function(req, res){
     return todo.remove(function(err) {
       if (!err) {
         console.log("removed");
-        return res.send('')
+        return res.send('');
       }
     });
   });

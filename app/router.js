@@ -1,17 +1,19 @@
 define([
-  // Applicatoin.
+  // Application.
   "app",
 
   // Modules.
-  "modules/todo"
+  "modules/todo",
+  "modules/notdoing"
 ],
 
-function(app, Todo){
+function(app, Todo, NotDoing){
     var Router = Backbone.Router.extend({
         routes: {
             // Pages
             'mytodo': 'mytodo',
-            ''      : 'mytodo',
+            'notdoing': 'notdoing',
+            ''      : 'notdoing',
 
             // Default - catch all
             '*actions': 'defaultAction'
@@ -23,6 +25,13 @@ function(app, Todo){
                 collection: list
             });
 
+        },
+
+        notdoing: function(){
+            var list = new NotDoing.Collection();
+            App = new NotDoing.Views.Main({
+                collection: list
+            });
         },
 
         defaultAction: function(){
