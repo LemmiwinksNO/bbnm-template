@@ -18,7 +18,8 @@
     width: 50%;
 }
 
-.item button {
+.item .edit-item,
+.item .delete-item {
     display: inline;
     position: relative;
     line-height: 23px;
@@ -28,7 +29,7 @@
     margin-right: -4px;
 }
 
-.item button.delete-item {
+.item .delete-item {
     border-radius: 0 4px 4px 0;
 }
 
