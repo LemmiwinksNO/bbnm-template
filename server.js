@@ -64,6 +64,30 @@ app.post('/api/notdoing', function(req, res) {
   });
 });
 
+app.put('/api/notdoing/:id', function(req, res) {
+  return NotDo.findById(req.params.id, function(err, notdo) {
+    notdo.title = req.body.title;
+    notdo.description = req.body.description;
+    return notdo.save(function(err) {
+      if (!err) {
+        console.log("updated");
+        return res.send(notdo);
+      }
+    });
+  });
+});
+
+app.delete('/api/notdoing/:id', function(req, res) {
+  return NotDo.findById(req.params.id, function(err, notdo) {
+    return notdo.remove(function(err) {
+      if (!err) {
+        console.log("removed");
+        return res.send('');
+      }
+    });
+  });
+});
+
 
 // Todos API
 app.get('/api/todos', function(req, res){
@@ -88,8 +112,8 @@ app.put('/api/todos/:id', function(req, res){
     return todo.save(function(err) {
       if (!err) {
         console.log("updated");
+        return res.send(todo);
       }
-      return res.send(todo);
     });
   });
 });

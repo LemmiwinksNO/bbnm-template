@@ -1,16 +1,35 @@
 .item {
-    border: 1px solid black;
-    background: #eeeeee;
-    border-radius: 5px;
-    padding: 0.4em;
-    margin: 3px;
-    cursor: move;
+    /*border: 1px solid black;*/
+    margin: 3px 0 3px 3px;
+    display: inline-block;
 }
 
 .item .title {
+    display: inline;
+    position: relative;
+    background: #eeeeee;
+    border: 2px solid black;
+    border-radius: 4px 0 0 4px;
+    padding: 0.4em;
+    cursor: move;
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
+    width: 50%;
+}
+
+.item button {
+    display: inline;
+    position: relative;
+    line-height: 23px;
+    border: 2px solid black;
+    border-radius: 0 0 0 0;
+    margin-left: -2px;
+    margin-right: -4px;
+}
+
+.item button.delete-item {
+    border-radius: 0 4px 4px 0;
 }
 
 h2 {
@@ -26,4 +45,9 @@ textarea.description {
     display: block;
     margin-left: auto;
     margin-right: auto;
+}
+
+.delete-item,
+.edit-item {
+    cursor: pointer;
 }

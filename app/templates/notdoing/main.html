@@ -16,11 +16,11 @@
     </div><!-- /.column3 -->
 </div><!-- /.row -->
 
-<!-- Modal -->
-<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<!-- Add Modal -->
+<div id="add-modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="add-modal-label" aria-hidden="true">
   <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-    <h3 id="myModalLabel">Add Item</h3>
+    <h3 id="add-modal-label">Add Item</h3>
   </div>
   <div class="modal-body">
     <form>
@@ -31,5 +31,23 @@
   <div class="modal-footer">
     <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
     <button id="add-item" class="btn btn-primary">Add Item</button>
+  </div>
+</div>
+
+<!-- Edit Modal -->
+<div id="edit-modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="edit-modal-label" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="edit-modal-label">Edit Item</h3>
+  </div>
+  <div class="modal-body">
+    <form>
+        <input class="title span5" type="text" placeholder="Title">
+        <textarea class="description span5" rows="3" placeholder="Description"></textarea>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+    <button id="save-item" class="btn btn-primary">Save</button>
   </div>
 </div>

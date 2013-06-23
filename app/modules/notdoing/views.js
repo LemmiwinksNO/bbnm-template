@@ -16,7 +16,7 @@ define([
     var Views = {};
 
     // Not Doing List Item View
-    // --------------
+    // ------------------------
 
     Views.Item = Backbone.View.extend({
 
@@ -25,19 +25,54 @@ define([
         template: Handlebars.compile(ItemView),
 
         events: {
-
+            'click .edit-item': 'clickEdit',
+            'click .delete-item': 'clickDelete'
         },
 
         initialize: function() {
+            this.listenTo(this.model, 'change', this.render);
+            // this.listenTo(this.model, 'destroy', this.remove);
             // this.render();
         },
 
         render: function() {
-            // this.$el.html(this.template(this.model.toJSON()));
             this.$el.html(this.template(this.model.toJSON()));
             return this;
-        }
+        },
 
+        /**
+         * Edit an existing item.
+         * Load up edit modal.
+         */
+        clickEdit: function() {
+            // Create modal and set input fields
+            $("#edit-modal input.title").val(this.model.get("title"));
+            $("#edit-modal .description").val(this.model.get("description"));
+            $("#edit-modal").modal();
+
+            // Focus first input field
+            $("#edit-modal").on('shown', function() {
+                $(this).find("input.title").focus();
+            });
+
+            // Make save button work
+            $("#edit-modal #save-item").click(function(){
+                this.clickSave();
+            }.bind(this));
+        },
+
+        clickSave: function() {
+            this.model.save({
+                title: $("#edit-modal input.title").val(),
+                description: $("#edit-modal .description").val()
+            });
+            $("#edit-modal").modal('hide');
+        },
+
+        clickDelete: function() {
+            this.model.destroy();
+            this.$el.remove();
+        }
 
 
     });
@@ -85,25 +120,31 @@ define([
             this.$(column + " ul").append(view.render().el);
         },
 
-        clickEdit: function() {
-
-        },
-
+        /**
+         * Load up modal for adding items and focus first input field.
+         */
         clickAddModal: function() {
-            $("#myModal").modal();
+            this.$el.find("#add-modal").modal();
+            this.$("#add-modal").on('shown', function() {
+                $(this).find("input.title").focus();
+            });
         },
 
+        /**
+         * Add item to not doing list
+         */
         clickAddItem: function() {
             console.log("clickAddItem");
             var title = $("input.title").val();
             var description = $("textarea.description").val();
-            this.collection.create({
-                title: title,
-                description: description,
-                status: 1
-            });
+            if (title){
+                this.collection.create({
+                    title: title,
+                    description: description,
+                    status: 1
+                });
+            }
         }
-
     });
 
     return Views;

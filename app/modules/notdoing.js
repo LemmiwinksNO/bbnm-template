@@ -19,6 +19,8 @@ define([
 
     NotDoing.Model = Backbone.Model.extend({
 
+        idAttribute: "_id",  // This lets us use PUT method
+
         defaults: {
             title: '',
             description: '',
