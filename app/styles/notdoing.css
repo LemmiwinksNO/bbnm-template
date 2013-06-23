@@ -27,6 +27,8 @@
     border-radius: 0 0 0 0;
     margin-left: -2px;
     margin-right: -4px;
+    padding-left: 8px;
+    padding-right: 8px;
 }
 
 .item .delete-item {
