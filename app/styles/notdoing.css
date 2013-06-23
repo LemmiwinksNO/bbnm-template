@@ -1,0 +1,29 @@
+.item {
+    border: 1px solid black;
+    background: #eeeeee;
+    border-radius: 5px;
+    padding: 0.4em;
+    margin: 3px;
+    cursor: move;
+}
+
+.item .title {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+h2 {
+    text-align: center;
+}
+
+#add-item-modal {
+    cursor: pointer;
+}
+
+input.title,
+textarea.description {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}

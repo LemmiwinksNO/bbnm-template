@@ -5,12 +5,24 @@ var application_root = __dirname,
 
 var app = express();
 
+app.configure(function(){
+  app.use(express.bodyParser());  // parses request body according to content type in request.
+  app.use(express.methodOverride());  // Lets you make HTTP methods other than GET and POST
+  app.use(app.router);
+  app.use(express.static(application_root));
+  // app.use(express.static(path.join(application_root + "app")));
+  app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
+  //app.set('views', path.join(application_root, "views"));
+  //app.set('view engine', 'jade')
+});
+
 // model
 mongoose.connect('mongodb://localhost/my_database');
 
 // Schemas
 var notDoSchema = mongoose.Schema({
     title: String,
+    description: String,
     status: Number
 });
 var NotDo = mongoose.model('NotDo', notDoSchema);
@@ -22,17 +34,6 @@ var Todo = mongoose.model('Todo', new mongoose.Schema({
   order: Number
 }));
 
-app.configure(function(){
-  app.use(express.bodyParser());
-  app.use(express.methodOverride());
-  app.use(app.router);
-  app.use(express.static(application_root));
-  // app.use(express.static(path.join(application_root + "app")));
-  app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
-  //app.set('views', path.join(application_root, "views"));
-  //app.set('view engine', 'jade')
-});
-
 app.get('/', function(req, res){
   res.sendfile(application_root + '/index.html');
 });
@@ -41,6 +42,30 @@ app.get('/bootstrap', function(req, res){
   res.sendfile(application_root + '/testbootstrap.html');
 });
 
+
+// Notdoing API
+app.get('/api/notdoing', function(req, res) {
+  return NotDo.find(function(err, notdos) {
+    return res.send(notdos);
+  });
+});
+
+app.post('/api/notdoing', function(req, res) {
+  var notdo;
+  notdo = new NotDo({
+    title: req.body.title,
+    description: req.body.description,
+    status: req.body.status
+  });
+  notdo.save(function(err) {
+    if (!err) {
+      return console.log("created");
+    }
+  });
+});
+
+
+// Todos API
 app.get('/api/todos', function(req, res){
   return Todo.find(function(err, todos) {
     return res.send(todos);

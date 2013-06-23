@@ -21,6 +21,7 @@ define([
 
         defaults: {
             title: '',
+            description: '',
             status: 1
         },
 
