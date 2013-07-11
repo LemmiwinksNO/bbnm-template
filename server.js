@@ -1,147 +1,57 @@
-var application_root = __dirname,
-  express = require("express"),
-  path = require("path"),
-  mongoose = require('mongoose');
 
-var app = express();
+/**
+ * Module dependencies.
+ */
 
-app.configure(function(){
-  app.use(express.bodyParser());  // parses request body according to content type in request.
-  app.use(express.methodOverride());  // Lets you make HTTP methods other than GET and POST
-  app.use(app.router);
-  app.use(express.static(application_root));
-  // app.use(express.static(path.join(application_root + "app")));
-  app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
-  //app.set('views', path.join(application_root, "views"));
-  //app.set('view engine', 'jade')
-});
+var express = require('express'),
+    routes = require('./routes'),
+    http = require('http'),
+    path = require('path');
+    mongoose = require('mongoose');
 
-// model
 mongoose.connect('mongodb://localhost/my_database');
 
-// Schemas
-var notDoSchema = mongoose.Schema({
-    title: String,
-    description: String,
-    status: Number
+var app = express();
+app.configure(function(){
+    app.set('port', process.env.PORT || 3000);
+    //app.set('views', __dirname + '/views');
+    //app.set('view engine', 'jade')
+    app.use(express.bodyParser());  // parses request body according to content type in request.
+    app.use(express.methodOverride());  // Lets you make HTTP methods other than GET and POST
+    app.use(app.router);
+    app.use(express.static(__dirname));
+    // app.use(express.static(path.join(__dirname + "app")));
+    app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
 });
-var NotDo = mongoose.model('NotDo', notDoSchema);
 
-// Or all in one
-var Todo = mongoose.model('Todo', new mongoose.Schema({
-  text: String,
-  done: Boolean,
-  order: Number
-}));
 
+// Routes - Controller code and URL handlers
+var notdoing = require('./routes/notdoing'),
+    todo = require('./routes/todo');
+
+// Home page
+// app.get('/', routes.index);
 app.get('/', function(req, res){
-  res.sendfile(application_root + '/index.html');
+  res.sendfile(__dirname + '/index.html');
 });
-
 app.get('/bootstrap', function(req, res){
-  res.sendfile(application_root + '/testbootstrap.html');
+  res.sendfile(__dirname + '/testbootstrap.html');
 });
 
+// NotDoing List
+app.get('/api/notdoing', notdoing.get);
+app.post('/api/notdoing', notdoing.post);
+app.put('/api/notdoing/:id', notdoing.update);
+app.delete('/api/notdoing/:id', notdoing.remove);
 
-// Notdoing API
-app.get('/api/notdoing', function(req, res) {
-  return NotDo.find(function(err, notdos) {
-    return res.send(notdos);
-  });
+// Todo list
+app.get('/api/todos', todo.getAll);
+app.get('/api/todos/:id', todo.getOne);
+app.post('/api/todos', todo.post);
+app.put('/api/todos/:id', todo.update);
+app.delete('/api/todos/:id', todo.remove);
+
+// app.listen(3000);
+http.createServer(app).listen(app.get('port'), function(){
+    console.log("Express server listening on port %d in %s mode", app.get('port'), app.settings.env);
 });
-
-app.post('/api/notdoing', function(req, res) {
-  var notdo;
-  notdo = new NotDo({
-    title: req.body.title,
-    description: req.body.description,
-    status: req.body.status
-  });
-  notdo.save(function(err) {
-    if (!err) {
-      return console.log("created");
-    }
-  });
-});
-
-app.put('/api/notdoing/:id', function(req, res) {
-  return NotDo.findById(req.params.id, function(err, notdo) {
-    notdo.title = req.body.title;
-    notdo.description = req.body.description;
-    return notdo.save(function(err) {
-      if (!err) {
-        console.log("updated");
-        return res.send(notdo);
-      }
-    });
-  });
-});
-
-app.delete('/api/notdoing/:id', function(req, res) {
-  return NotDo.findById(req.params.id, function(err, notdo) {
-    return notdo.remove(function(err) {
-      if (!err) {
-        console.log("removed");
-        return res.send('');
-      }
-    });
-  });
-});
-
-
-// Todos API
-app.get('/api/todos', function(req, res){
-  return Todo.find(function(err, todos) {
-    return res.send(todos);
-  });
-});
-
-app.get('/api/todos/:id', function(req, res){
-  return Todo.findById(req.params.id, function(err, todo) {
-    if (!err) {
-      return res.send(todo);
-    }
-  });
-});
-
-app.put('/api/todos/:id', function(req, res){
-  return Todo.findById(req.params.id, function(err, todo) {
-    todo.text = req.body.text;
-    todo.done = req.body.done;
-    todo.order = req.body.order;
-    return todo.save(function(err) {
-      if (!err) {
-        console.log("updated");
-        return res.send(todo);
-      }
-    });
-  });
-});
-
-app.post('/api/todos', function(req, res){
-  var todo;
-  todo = new Todo({
-    text: req.body.text,
-    done: req.body.done,
-    order: req.body.order
-  });
-  todo.save(function(err) {
-    if (!err) {
-      return console.log("created");
-    }
-  });
-  return res.send(todo);
-});
-
-app.delete('/api/todos/:id', function(req, res){
-  return Todo.findById(req.params.id, function(err, todo) {
-    return todo.remove(function(err) {
-      if (!err) {
-        console.log("removed");
-        return res.send('');
-      }
-    });
-  });
-});
-
-app.listen(3000);
