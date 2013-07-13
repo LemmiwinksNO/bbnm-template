@@ -10,7 +10,7 @@ var express = require('express'),
 
 mongoose.connect('mongodb://localhost/my_database');
 
-var app = express();
+var app = module.exports = express();
 
 // Configuration
 
