@@ -11,7 +11,7 @@ var notdoing = function(app, mongoose) {
   var NotDo = mongoose.model('NotDo', notDoSchema);
 
   // URL Handlers
-
+  // TODO MAKE THESE FUNCTIONS NAMED, NOT ANONYMOUS
   app.get('/api/notdoing', function(req, res){
     return NotDo.find(function(err, notdos) {
       return res.send(notdos);

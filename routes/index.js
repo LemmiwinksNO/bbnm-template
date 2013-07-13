@@ -3,22 +3,19 @@
  * GET home page.
  */
 
-exports.index = function(req, res){
-  res.sendfile(__dirname + '../index.html');
+var index = function(app){
+  app.get('/', function(req, res){
+    res.render('layout', {
+      title: 'Hello World'
+    });
+  });
 };
 
-
-// app.get('/', function(req, res){
-//   res.sendfile(__dirname + '/index.html');
-// });
-
-// app.get('/bootstrap', function(req, res){
-//   res.sendfile(__dirname + '/testbootstrap.html');
-// });
-
+module.exports = index;
 
 
 // I bet this will work now that I send in app and mongoose.
+// Couldn't get this to work.
 // var notdoing = require('./routes/notdoing')(app, mongoose),
 //     todo = require('./routes/todo')(app, mongoose);
 
