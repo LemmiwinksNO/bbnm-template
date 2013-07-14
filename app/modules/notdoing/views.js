@@ -5,13 +5,12 @@ define([
     'jquery',
     'underscore',
     'backbone',
-    'handlebars',
 
     // Tempalates
     'text!templates/notdoing/main.html',
     'text!templates/notdoing/item.html'
 
-], function(app, $, _, Backbone, Handlebars, MainView, ItemView) {
+], function(app, $, _, Backbone, MainView, ItemView) {
 
     var Views = {};
 
@@ -22,7 +21,8 @@ define([
 
         tagName: "li",
 
-        template: Handlebars.compile(ItemView),
+        // template: Handlebars.compile(ItemView),
+        template: _.template(ItemView),
 
         events: {
             'click .edit-item': 'clickEdit',
@@ -84,7 +84,8 @@ define([
 
         el: $("#main"),
 
-        template: Handlebars.compile(MainView),
+        // template: Handlebars.compile(MainView),
+        template: _.template(MainView),
 
         events: {
             'click #main-edit': 'clickEdit',

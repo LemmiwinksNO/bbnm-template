@@ -167,7 +167,8 @@ module.exports = function(grunt) {
         files: [
           { src: ["app/**"], dest: "<%= dist.debug %>" },
           { src: "vendor/**", dest: "<%= dist.debug %>" },
-          { src: "index.html", dest: "<%= dist.debug %>index.html" }
+          { src: "index.html", dest: "<%= dist.debug %>index.html" },
+          { src: "views/**", dest: "<%= dist.debug %>"}
         ]
       },
 
@@ -176,6 +177,7 @@ module.exports = function(grunt) {
           { src: ["app/**"], dest: "<%= dist.release %>" },
           { src: "vendor/**", dest: "<%= dist.release %>" },
           { src: "index.html", dest: "<%= dist.release %>index.html" },
+          { src: "views/**", dest: "<%= dist.release %>"},
           { src: "<%= dist.debug %>source.js", dest: "<%= dist.release %>debug/source.js" }
         ]
       }

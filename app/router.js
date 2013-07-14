@@ -1,3 +1,10 @@
+
+// define(function(require, exports, module){
+
+//     var Backbone = require("backbone");
+//     var Todo = require("modules/todo");
+//     var NotDoing = require("modules/notdoing");
+
 define([
   // Application.
   "app",

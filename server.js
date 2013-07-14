@@ -10,7 +10,8 @@ var express = require('express'),
 
 mongoose.connect('mongodb://localhost/my_database');
 
-var app = module.exports = express();
+var app = module.exports = express();  // export so we can use it for tests
+
 
 // Configuration
 
@@ -18,7 +19,8 @@ app.configure(function(){
   app.set('port', process.env.PORT || 3000);
   app.set('view engine', 'jade');
   app.set('view options', { layout: true });
-  app.set('views', __dirname + '/views');
+  // app.set('views', __dirname + '/views');  // development
+  app.set('views', __dirname + '/dist/release/views');  // production
   app.use(express.bodyParser());  // parses request body according to content type in request.
   app.use(express.methodOverride());  // Lets you make HTTP methods other than GET and POST
   app.use(app.router);
@@ -38,6 +40,7 @@ app.configure('test', function(){
 app.configure('production', function(){
   app.use(express.errorHandler());
 });
+
 
 // Routes - Controller code and URL handlers
 

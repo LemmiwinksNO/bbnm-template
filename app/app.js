@@ -1,3 +1,13 @@
+
+// define(function(require, exports, module) {
+
+//   // External dependencies
+//   var $ = require("jquery");
+//   var _ = require("underscore");
+//   var Backbone = require("backbone");
+//   // var LayoutManager = require("backbone.layoutmanager");
+//   var Bootstrap = require("bootstrap");
+
 define([
 
   // Do we need to add libraries? Well backbone.layoutmanager depends on
@@ -11,6 +21,8 @@ define([
 ],
 
 function($, _, Backbone) {
+
+
 
   // Provide a global location to place configuration settings and module
   // creation.
