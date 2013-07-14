@@ -2,12 +2,24 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Backbone Tests</title>
-  <link rel="stylesheet" href="vendor/mocha.css">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+
+  <title>Backbone Boilerplate Mocha Test Suite</title>
+
+  <!-- Mocha styles. -->
+  <link rel="stylesheet" href="../../node_modules/mocha/mocha.css">
 </head>
 
 <body>
   <div id="mocha"></div>
-  <script data-main="SpecRunner.js" src="../../vendor/js/libs/requirejs/require.js"></script>
+
+  <!-- Testing libraries. -->
+  <!-- // <script src="../../node_modules/chai.js"></script> -->
+  <!-- // <script src="../../node_modules/mocha.js"></script> -->
+  <script data-main="../../app/config" src="../../vendor/jam/require.js"></script>
+
+  <!-- Declare your spec files to be run inside this file. -->
+  <script src="test-runner.js"></script>
 </body>
 </html>
