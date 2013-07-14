@@ -8,7 +8,7 @@ define([
   'backbone',
 
   // Views
-  // 'modules/notdoing/views'
+  'modules/notdoing/views'
 
 ], function(app, $, _, Backbone, Views){
 

@@ -2,9 +2,9 @@ define([
 
   // Do we need to add libraries? Well backbone.layoutmanager depends on
   // backbone, which depends on underscore and jquery.
-    'jquery',
-    'underscore',
-    'backbone',
+  'jquery',
+  'underscore',
+  'backbone',
 
   // "backbone.layoutmanager",
   "bootstrap"
@@ -78,7 +78,7 @@ function($, _, Backbone) {
       }, options));
 
       // Cache the refererence.
-      return this.layout = layout;
+      this.layout = layout;
     }
   }, Backbone.Events);
 

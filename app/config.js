@@ -35,3 +35,28 @@ require.config({
         }
     }
 });
+
+// // This is the runtime configuration file.  It complements the Gruntfile.js by
+// // supplementing shared properties.
+// require.config({
+//   paths: {
+//     // Make vendor easier to access.
+//     "vendor": "../vendor",
+//     'handlebars' : '../vendor/js/libs/handlebars/handlebars',
+//     'text' : '../vendor/js/libs/requirejs-text/text'
+//   },
+
+//   shim: {
+//     'handlebars': {
+//         exports: 'Handlebars'
+//     }
+//   }
+
+//   // map: {
+//   //   // Opt for Lo-Dash Underscore compatibility build.
+//   //   "*": { "underscore": "vendor/jam/lodash/dist/lodash.underscore" }
+//   // },
+
+//   // // This should help with cache issues related to development.
+//   // urlArgs: "bust=" + Number(new Date())
+// });
