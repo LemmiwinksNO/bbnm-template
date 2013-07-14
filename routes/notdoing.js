@@ -11,10 +11,9 @@ var notdoing = function(app, mongoose) {
   var NotDo = mongoose.model('NotDo', notDoSchema);
 
   // URL Handlers
-  // TODO MAKE THESE FUNCTIONS NAMED, NOT ANONYMOUS
   app.get('/api/notdoing', function(req, res){
-    return NotDo.find(function(err, notdos) {
-      return res.send(notdos);
+    NotDo.find(function(err, notdos) {
+      res.send(notdos);
     });
   });
 
@@ -26,30 +25,30 @@ var notdoing = function(app, mongoose) {
     });
     notdo.save(function(err) {
       if (!err) {
-        return console.log("created");
+        console.log("created");
       }
     });
   });
 
   app.put('/api/notdoing/:id', function(req, res){
-    return NotDo.findById(req.params.id, function(err, notdo) {
+    NotDo.findById(req.params.id, function(err, notdo) {
       notdo.title = req.body.title;
       notdo.description = req.body.description;
-      return notdo.save(function(err) {
+      notdo.save(function(err) {
         if (!err) {
           console.log("updated");
-          return res.send(notdo);
+          res.send(notdo);
         }
       });
     });
   });
 
   app.delete('/api/notdoing/:id', function(req, res){
-    return NotDo.findById(req.params.id, function(err, notdo) {
-      return notdo.remove(function(err) {
+    NotDo.findById(req.params.id, function(err, notdo) {
+      notdo.remove(function(err) {
         if (!err) {
           console.log("removed");
-          return res.send('');
+          res.send('');
         }
       });
     });

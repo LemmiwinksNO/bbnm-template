@@ -8,6 +8,10 @@
         "requirejs": null,
         "requirejs-text": null,
         "layoutmanager": null,
-        "handlebars": null
+        "handlebars": null,
+        "jade": null,
+        "mocha": null,
+        "chai": null,
+        "chai-jquery": null
     }
 }

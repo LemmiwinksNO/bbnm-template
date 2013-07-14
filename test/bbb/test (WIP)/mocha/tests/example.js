@@ -1,9 +1,5 @@
-var chai = require('chai');
-var expect = chai.expect;
-var app = require('../../server');  // for configuration settings
-
 describe("Simple tests examples", function() {
-
+  
   it("should detect true", function() {
     expect(true).to.be.true;
   });
@@ -25,7 +21,7 @@ describe("Simple tests examples", function() {
 });
 
 describe("Tests with before/after hooks", function() {
-
+  
   var a = 0;
 
   beforeEach(function() {

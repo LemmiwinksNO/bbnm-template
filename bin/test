@@ -1,1 +1,1 @@
-./node_modules/mocha/bin/mocha test/mocha-mine/_helper.js test/mocha-mine/example.js
+./node_modules/mocha/bin/mocha test/mocha-back/_helper.js test/mocha-back/example.js

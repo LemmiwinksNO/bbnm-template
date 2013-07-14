@@ -42,6 +42,6 @@ function() {
       // Only once the dependencies have finished loading, call mocha.run.
       mocha.run();
     }
-  
+
   });
 });
