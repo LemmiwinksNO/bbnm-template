@@ -36,6 +36,7 @@
 //     }
 // });
 
+
 // This is the runtime configuration file.  It complements the Gruntfile.js by
 // supplementing shared properties.
 require.config({
@@ -45,8 +46,8 @@ require.config({
   paths: {
     // Make vendor easier to access.
     "vendor": "../vendor",
-    'bootstrap': '../vendor/bootstrap/js/bootstrap',
-    'text' : '../vendor/js/libs/requirejs-text/text'
+    'bootstrap': '../vendor/bower/bootstrap.css/js/bootstrap',
+    'text' : '../vendor/bower/requirejs-text/text'
   },
 
   shim: {

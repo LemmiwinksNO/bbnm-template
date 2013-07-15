@@ -19,12 +19,15 @@ app.configure(function(){
   app.set('port', process.env.PORT || 3000);
   app.set('view engine', 'jade');
   app.set('view options', { layout: true });
+
   app.set('views', __dirname + '/views');  // development
   // app.set('views', __dirname + '/dist/release/views');  // production
+
   app.use(express.bodyParser());  // parses request body according to content type in request.
   app.use(express.methodOverride());  // Lets you make HTTP methods other than GET and POST
   app.use(app.router);
   app.use(express.static(__dirname));
+
   // app.use(express.static(path.join(__dirname + "/app")));
   app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
 });

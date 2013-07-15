@@ -2,6 +2,7 @@ var chai = require('chai');
 var expect = chai.expect;
 var assert = chai.assert;
 var should = chai.should;
+var request = require('request');
 var app = require('../../server');  // for configuration settings
 
 describe("Simple tests examples", function() {

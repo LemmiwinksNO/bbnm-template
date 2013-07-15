@@ -124,42 +124,42 @@ module.exports = function(grunt) {
     // that no files linger from previous builds.
     clean: ["dist/"],
 
-    server: {
-      map: {
-        // Point to the Jam `require.js` file because it includes all package
-        // paths automatically.
-        "source.js": "vendor/jam/require.js",
+    // server: {
+    //   map: {
+    //     // Point to the Jam `require.js` file because it includes all package
+    //     // paths automatically.
+    //     "source.js": "vendor/jam/require.js",
 
-        // Keep the styles file generic to make running from the `dist/`
-        // directory easier.
-        "styles.css": "app/styles/index.css"
-      },
+    //     // Keep the styles file generic to make running from the `dist/`
+    //     // directory easier.
+    //     "styles.css": "app/styles/index.css"
+    //   },
 
-      // Specifically used for testing the application.
-      // test: {
-      //   map: "<%= server.map %>",
-      //   forever: false,
-      //   port: 8001
-      // },
+    //   // Specifically used for testing the application.
+    //   test: {
+    //     // map: "<%= server.map %>",
+    //     // forever: false,
+    //     // port: 8001
+    //   },
 
-      debug: {
-        map: {
-          "source.js": "<%= dist.debug %>source.js",
-          "app/styles/index.css": "<%= dist.debug %>app/styles/index.css"
-        }
-      },
+    //   debug: {
+    //     map: {
+    //       "source.js": "<%= dist.debug %>source.js",
+    //       "app/styles/index.css": "<%= dist.debug %>app/styles/index.css"
+    //     }
+    //   },
 
-      release: {
-        map: {
-          "debug/source.js": "<%= dist.release %>debug/source.js",
-          "source.js": "<%= dist.release %>source.js",
-          "app/styles/index.css": "<%= dist.release %>app/styles/index.css",
+    //   release: {
+    //     map: {
+    //       "debug/source.js": "<%= dist.release %>debug/source.js",
+    //       "source.js": "<%= dist.release %>source.js",
+    //       "app/styles/index.css": "<%= dist.release %>app/styles/index.css",
 
-          // Necessary for SourceMap debugging.
-          "source.js.map": "<%= dist.release %>source.js.map"
-        }
-      }
-    },
+    //       // Necessary for SourceMap debugging.
+    //       "source.js.map": "<%= dist.release %>source.js.map"
+    //     }
+    //   }
+    // },
 
     // Move vendor and app logic during a build.
     copy: {
@@ -185,7 +185,7 @@ module.exports = function(grunt) {
 
     shell: {
       'mocha-phantomjs': {
-        command: 'mocha-phantomjs -R dot http://localhost:3000/test/mocha-front/index.html',
+        command: 'mocha-phantomjs http://localhost:3000/test/mocha-front/index.html',
         options: {
           stdout: true,
           stderr: true
@@ -200,80 +200,6 @@ module.exports = function(grunt) {
       }
     }
 
-    // karma: {
-    //   options: {
-    //     basePath: process.cwd(),
-    //     runnerPort: 9999,
-    //     port: 9876,
-    //     singleRun: true,
-    //     colors: true,
-    //     captureTimeout: 7000,
-
-    //     reporters: ["progress"],
-    //     browsers: ["PhantomJS"],
-
-    //     plugins: [
-    //       "karma-jasmine",
-    //       "karma-mocha",
-    //       "karma-qunit",
-    //       "karma-chrome-launcher",
-    //       "karma-firefox-launcher",
-    //       "karma-phantomjs-launcher"
-    //     ],
-
-    //     proxies: {
-    //       "/base": "http://localhost:<%=server.test.port%>"
-    //     }
-    //   },
-
-    //   jasmine: {
-    //     options: {
-    //       frameworks: ["jasmine"],
-
-    //       files: [
-    //         "test/jasmine/vendor/jasmine-html.js",
-    //         "vendor/jam/require.js",
-    //         "test/jasmine/test-runner.js"
-    //       ]
-    //     }
-    //   },
-
-    //   mocha: {
-    //     options: {
-    //       frameworks: ["mocha"],
-
-    //       files: [
-    //         "test/mocha/vendor/chai.js",
-    //         "vendor/jam/require.js",
-    //         "test/mocha/test-runner.js"
-    //       ]
-    //     }
-    //   },
-
-    //   qunit: {
-    //     options: {
-    //       frameworks: ["qunit"],
-
-    //       files: [
-    //         "vendor/jam/require.js",
-    //         "test/qunit/test-runner.js"
-    //       ]
-    //     }
-    //   }
-    // },
-
-    // jasmine: {
-    //   pivotal: {
-    //     src: [
-    //       "vendor/jam/require.js",
-    //       "test/jasmine/vendor/jasmine-html.js",
-    //       "test/jasmine/test-runner.js"
-    //     ],
-    //     options: {
-    //       specs: "test/jasmine/spec/*.js"
-    //     }
-    //   }
-    // }
   });
 
   // Grunt contribution tasks.
@@ -284,7 +210,6 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks("grunt-contrib-cssmin");
   grunt.loadNpmTasks("grunt-contrib-clean");
   grunt.loadNpmTasks("grunt-contrib-copy");
-  // grunt.loadNpmTasks("grunt-contrib-jasmine");
   grunt.loadNpmTasks("grunt-shell");
   grunt.loadNpmTasks("grunt-contrib-watch");
 
@@ -306,10 +231,18 @@ module.exports = function(grunt) {
   // the built JavaScript and then minify the built CSS.
   grunt.registerTask("release", ["debug", "uglify", "cssmin"]);
 
+  // When running the default Grunt command, just lint the code.
+  grunt.registerTask("default", ["jshint"]);
+
   // The test task take care of starting test server and running tests.
   // grunt.registerTask("test", ["jshint", "server:test", "karma"]);
 
-  // When running the default Grunt command, just lint the code.
-  grunt.registerTask("default", ["jshint"]);
+  // Start node.js server and run front-end tests.
+  grunt.registerTask("test", "Start web server and test.", function(){
+    grunt.task.run(['jshint']);
+    grunt.log.writeln("Starting web server");
+    require("./server.js");
+    grunt.task.run(['shell:mocha-phantomjs']);
+  });
 
 };
