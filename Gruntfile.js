@@ -198,6 +198,22 @@ module.exports = function(grunt) {
         files: ["**/*.js"],
         tasks: ["shell:mocha-phantomjs"]
       }
+    },
+
+    jade2js: {
+      compile: {
+        options: {
+          namespace: 'JST',
+          processName: function(filename){
+            return filename;
+          },
+          // You need the runtime but where do you want to include it.
+          includeRuntime: false
+        },
+        files: {
+          'templates.js': 'app/templates/**/*.jade'
+        }
+      }
     }
 
   });
@@ -212,6 +228,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks("grunt-contrib-copy");
   grunt.loadNpmTasks("grunt-shell");
   grunt.loadNpmTasks("grunt-contrib-watch");
+  grunt.loadNpmTasks('grunt-jade-plugin');
 
   // Third-party tasks.
   // grunt.loadNpmTasks("grunt-karma");

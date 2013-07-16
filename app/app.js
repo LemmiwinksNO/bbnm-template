@@ -44,6 +44,7 @@ function($, _, Backbone, Layout) {
     // This custom fetch method will load pre-compiled templates or
     // fetch them remotely with AJAX.
     fetch: function(path) {
+
       // Concatenate the file extension.
       path = path + ".html";
 

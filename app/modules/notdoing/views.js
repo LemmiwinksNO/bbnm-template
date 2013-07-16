@@ -4,13 +4,9 @@ define([
     // libs
     'jquery',
     'underscore',
-    'backbone',
+    'backbone'
 
-    // Tempalates
-    'text!templates/notdoing/main.html',
-    'text!templates/notdoing/item.html'
-
-], function(app, $, _, Backbone, MainView, ItemView) {
+], function(app, $, _, Backbone) {
 
     var Views = {};
 
@@ -36,7 +32,6 @@ define([
         },
 
         initialize: function() {
-            console.log("Views.item ", this.model);
             this.listenTo(this.model, 'change', this.render);
             // this.listenTo(this.model, 'destroy', this.remove);
             // this.render();
@@ -104,22 +99,20 @@ define([
 
             // Add listeners to the collection
             this.listenTo(this.collection, 'add', this.addOne);
-            // this.listenTo(this.collection, 'reset', this.addAll);
-            // this.listenTo(this.collection, 'all', this.render);
 
             this.collection.fetch();
 
             this.listenTo(this.collection, 'reset', this.render);
         },
 
-        beforeRender: function(){
-            console.log("beforeRender");
-            this.collection.each(function(item){
-                this.insertView(".column1 ul", new Views.Item({
-                    model: item
-                }));
-            }.bind(this));
-        },
+        // beforeRender: function(){
+        //     console.log("beforeRender");
+        //     this.collection.each(function(item){
+        //         this.insertView(".column1 ul", new Views.Item({
+        //             model: item
+        //         }));
+        //     }.bind(this));
+        // },
 
         // render: function() {
         //     // var options = {
@@ -131,10 +124,8 @@ define([
 
         addOne: function(notdo) {
             console.log("addOne ", notdo);
-            var view = new Views.Item({model: notdo});
             var column = ".column" + notdo.get("status");
-            this.$(column + " ul").append(view.render().el);
-            this.insertView(".column1 ul", new Views.Item({
+            this.insertView(column + " ul", new Views.Item({
                 model: notdo
             })).render();
         },
@@ -156,16 +147,13 @@ define([
             console.log("clickAddItem");
             var title = $("input.title").val();
             var description = $("textarea.description").val();
-            var item;
             if (title){
-                item = this.collection.create({
+                this.collection.create({
                     title: title,
                     description: description,
                     status: 1
                 });
             }
-
-            // this.addOne(item);
         }
     });
 

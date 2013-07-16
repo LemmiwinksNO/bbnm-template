@@ -46,8 +46,7 @@ require.config({
   paths: {
     // Make vendor easier to access.
     "vendor": "../vendor",
-    'bootstrap': '../vendor/bower/bootstrap.css/js/bootstrap',
-    'text' : '../vendor/bower/requirejs-text/text'
+    'bootstrap': '../vendor/bower/bootstrap.css/js/bootstrap'
   },
 
   shim: {

@@ -8,7 +8,10 @@ html
     title= "Growth App"
 
     //- Development and production
-    link(rel='stylesheet', href='app/styles/index.css')
+    link(rel='stylesheet', href='/app/styles/index.css')
+
+    //- Production (I don't know why this doesn't work like source.js)
+    //- link(rel='stylesheet', href='/dist/release/app/styles/index.css')
 
     | <style>
     | body { padding-top: 60px; }

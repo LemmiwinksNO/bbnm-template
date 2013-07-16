@@ -34,7 +34,8 @@
     "chai-jquery": "~1.1.1",
     "grunt-shell": "~0.3.1",
     "grunt-contrib-watch": "~0.4.4",
-    "request": "~2.22.0"
+    "request": "~2.22.0",
+    "grunt-jade-plugin": "~0.5.0"
   },
   "jam": {
     "packageDir": "./vendor/jam",

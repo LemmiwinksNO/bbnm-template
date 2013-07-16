@@ -41,14 +41,9 @@ function(app, Todo, NotDoing){
             'mytodo': 'mytodo',
             'notdoing': 'notdoing',
             ''      : 'notdoing',
-            'test'  : 'test',
 
             // Default - catch all
             '*actions': 'defaultAction'
-        },
-
-        test: function(){
-
         },
 
         mytodo: function(){
@@ -62,22 +57,17 @@ function(app, Todo, NotDoing){
         notdoing: function(){
             var list = new NotDoing.Collection();
 
-            app.useLayout("main-layout");
+            app.useLayout("main-layout").setView(
+                "#main", new NotDoing.Views.Main({
+                    collection: list
+            }));
             app.layout.render();
-            app.layout.insertView("#main", new NotDoing.Views.Main({
-                collection: list
-            })).render();
-
-            // app.layout.render();
-
-            // var myLayout = app.useLayout("main-layout");
-            // myLayout.insertView("#main", new NotDoing.Views.Main({
+            // app.layout.insertView("#main", new NotDoing.Views.Main({
             //     collection: list
             // })).render();
+            //
 
-            // app.layout.insertView("body", new NotDoing.View.Main({
-            //     collection: list
-            // })).render();
+
 
             // App = new NotDoing.Views.Main({
             //     collection: list
