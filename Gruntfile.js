@@ -193,25 +193,31 @@ module.exports = function(grunt) {
       }
     },
 
+    // Could watch templates, and compile them. Then we ALWAYS have the JST
+    // object to get them from. This is the only way I can get jade on 
+    // client side.
     watch: {
       scripts: {
         files: ["**/*.js"],
         tasks: ["shell:mocha-phantomjs"]
+      },
+      templates: {
+        files: ["app/**/*.jade"],
+        tasks: ["jade2js:dev"]
       }
     },
 
     jade2js: {
-      compile: {
+      dev: {
         options: {
           namespace: 'JST',
           processName: function(filename){
             return filename;
           },
-          // You need the runtime but where do you want to include it.
-          includeRuntime: false
+          includeRuntime: true
         },
         files: {
-          'templates.js': 'app/templates/**/*.jade'
+          'app/templates/templates.js': 'app/templates/**/*.jade'
         }
       },
       debug: {
@@ -220,8 +226,7 @@ module.exports = function(grunt) {
           processName: function(filename){
             return filename;
           },
-          // You need the runtime but where do you want to include it.
-          includeRuntime: false
+          includeRuntime: true
         },
         files: {
           "<%= dist.debug %>templates.js": 'app/templates/**/*.jade'
@@ -254,7 +259,7 @@ module.exports = function(grunt) {
   // This will reset the build, be the precursor to the production
   // optimizations, and serve as a good intermediary for debugging.
   grunt.registerTask("debug", [
-    "clean", "jshint", "jst", "requirejs", "concat", "copy", "styles"
+    "clean", "jshint", "jade2js", "requirejs", "concat", "copy", "styles"
   ]);
 
   // The release task will first run the debug tasks.  Following that, minify

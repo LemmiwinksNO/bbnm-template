@@ -123,7 +123,6 @@ define([
         // },
 
         addOne: function(notdo) {
-            console.log("addOne ", notdo);
             var column = ".column" + notdo.get("status");
             this.insertView(column + " ul", new Views.Item({
                 model: notdo
@@ -144,7 +143,6 @@ define([
          * Add item to not doing list
          */
         clickAddItem: function() {
-            console.log("clickAddItem");
             var title = $("input.title").val();
             var description = $("textarea.description").val();
             if (title){

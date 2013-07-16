@@ -1,31 +1,14 @@
 require.config({
   // baseUrl: '/backbone-tests/',
   paths: {
-    'jquery': '../../vendor/jam/jquery/dist/jquery',
-    // 'bootstrap': '../../vendor/bootstrap/js/bootstrap',
-    // 'underscore': '../../vendor/jam/underscore/underscore',
-    // 'backbone': '../../vendor/jam/backbone/backbone',
-    // 'backbone.layoutmanager' : '../../vendor/js/libs/layoutmanager/backbone.layoutmanager',
-    // 'text' : '../../vendor/js/libs/requirejs-text/text',
-    'mocha'         : '../../node_modules/mocha/mocha',
-    'chai'          : '../../node_modules/chai/chai'
+    'jquery': '../vendor/jam/jquery/dist/jquery',
+    'mocha'         : '../node_modules/mocha/mocha',
+    'chai'          : '../node_modules/chai/chai'
     // 'chai-jquery'   : '../../vendor/js/libs/chai-jquery/chai-jquery',
     // 'models'        : 'models',
     // 'notdoing'      : '../../app/modules/notdoing'
   },
   shim: {
-    // 'bootstrap': ['jquery'],
-    // 'backbone.layoutmanager': {
-    //   'deps': [
-    //     'jquery',
-    //     'backbone',
-    //     'underscore'
-    //   ],
-    //   'exports': 'Backbone.LayoutManager'
-    // },
-    // 'handlebars': {
-    //   exports: 'Handlebars'
-    // },
     // 'chai-jquery': ['jquery', 'chai']
   },
   urlArgs: 'bust=' + (new Date()).getTime()

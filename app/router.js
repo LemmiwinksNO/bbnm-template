@@ -10,11 +10,11 @@ define([
   "app",
 
   // Modules.
-  "modules/todo",
+  // "modules/todo"
   "modules/notdoing"
 ],
 
-function(app, Todo, NotDoing){
+function(app, NotDoing){
     var Router = Backbone.Router.extend({
         initialize: function(){
 
