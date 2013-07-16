@@ -16,13 +16,11 @@ define([
   'underscore',
   'backbone',
 
-  // "backbone.layoutmanager",
+  "backbone.layoutmanager",
   "bootstrap"
 ],
 
-function($, _, Backbone) {
-
-
+function($, _, Backbone, Layout) {
 
   // Provide a global location to place configuration settings and module
   // creation.
@@ -31,35 +29,39 @@ function($, _, Backbone) {
     root: "/"
   };
 
+
   // Localize or create a new JavaScript Template object.
-  // var JST = window.JST = window.JST || {};
+  var JST = window.JST = window.JST || {};
 
-  // // Configure LayoutManager with Backbone Boilerplate defaults.
-  // Backbone.Layout.configure({
-  //   // Allow LayoutManager to augment Backbone.View.prototype.
-  //   manage: true,
+  // Configure LayoutManager with Backbone Boilerplate defaults.
+  Backbone.Layout.configure({
+    // Allow LayoutManager to augment Backbone.View.prototype.
+    manage: true,
 
-  //   prefix: "app/templates/",
+    // Indicate where templates are stored
+    prefix: "app/templates/",
 
-  //   fetch: function(path) {
-  //     // Concatenate the file extension.
-  //     path = path + ".html";
+    // This custom fetch method will load pre-compiled templates or
+    // fetch them remotely with AJAX.
+    fetch: function(path) {
+      // Concatenate the file extension.
+      path = path + ".html";
 
-  //     // If cached, use the compiled template.
-  //     if (JST[path]) {
-  //       return JST[path];
-  //     }
+      // If cached, use the compiled template.
+      if (JST[path]) {
+        return JST[path];
+      }
 
-  //     // Put fetch into `async-mode`.
-  //     var done = this.async();
+      // Put fetch into `async-mode`.
+      var done = this.async();
 
-  //     // Seek out the template asynchronously.
-  //     console.log(" path ", path);
-  //     $.get(app.root + path, function(contents) {
-  //       done(JST[path] = _.template(contents));
-  //     });
-  //   }
-  // });
+      // Seek out the template asynchronously.
+      console.log(" path ", path);
+      $.get(app.root + path, function(contents) {
+        done(JST[path] = _.template(contents));
+      }, "text");
+    }
+  });
 
   // Mix Backbone.Events, modules, and layout management into the app object.
   return _.extend(app, {
@@ -86,11 +88,14 @@ function($, _, Backbone) {
 
       // Create a new Layout with options.
       var layout = new Backbone.Layout(_.extend({
-        el: "#main"
+        el: "#crucial"
       }, options));
 
       // Cache the refererence.
       this.layout = layout;
+
+      // Return the reference, for chainability
+      return layout;
     }
   }, Backbone.Events);
 

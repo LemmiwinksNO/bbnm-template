@@ -22,23 +22,30 @@ define([
         tagName: "li",
 
         // template: Handlebars.compile(ItemView),
-        template: _.template(ItemView),
+        // template: _.template(ItemView),
+        template: "notdoing/item",
 
         events: {
             'click .edit-item': 'clickEdit',
             'click .delete-item': 'clickDelete'
         },
 
+        // serialize is what goes to your template
+        serialize: function(){
+            return {model: this.model };
+        },
+
         initialize: function() {
+            console.log("Views.item ", this.model);
             this.listenTo(this.model, 'change', this.render);
             // this.listenTo(this.model, 'destroy', this.remove);
             // this.render();
         },
 
-        render: function() {
-            this.$el.html(this.template(this.model.toJSON()));
-            return this;
-        },
+        // render: function() {
+        //     // this.$el.html(this.template(this.model.toJSON()));
+        //     return this;
+        // },
 
         /**
          * Edit an existing item.
@@ -82,10 +89,9 @@ define([
 
     Views.Main = Backbone.View.extend({
 
-        el: $("#main"),
-
         // template: Handlebars.compile(MainView),
-        template: _.template(MainView),
+        // template: _.template(MainView),
+        template: "notdoing/main",
 
         events: {
             'click #main-edit': 'clickEdit',
@@ -94,7 +100,7 @@ define([
         },
 
         initialize: function() {
-            this.$el.html(this.template);
+            // this.$el.html(this.template);
 
             // Add listeners to the collection
             this.listenTo(this.collection, 'add', this.addOne);
@@ -103,22 +109,34 @@ define([
 
             this.collection.fetch();
 
-            this.render();
+            this.listenTo(this.collection, 'reset', this.render);
         },
 
-        render: function() {
-            // var options = {
-            //     title: "Task"
-            // };
-            // var view = new Views.Item({model: options});
-            // this.$(".column1 ul").append(view.render().el);
+        beforeRender: function(){
+            console.log("beforeRender");
+            this.collection.each(function(item){
+                this.insertView(".column1 ul", new Views.Item({
+                    model: item
+                }));
+            }.bind(this));
         },
+
+        // render: function() {
+        //     // var options = {
+        //     //     title: "Task"
+        //     // };
+        //     // var view = new Views.Item({model: options});
+        //     // this.$(".column1 ul").append(view.render().el);
+        // },
 
         addOne: function(notdo) {
-            console.log("addOne");
+            console.log("addOne ", notdo);
             var view = new Views.Item({model: notdo});
             var column = ".column" + notdo.get("status");
             this.$(column + " ul").append(view.render().el);
+            this.insertView(".column1 ul", new Views.Item({
+                model: notdo
+            })).render();
         },
 
         /**
@@ -138,13 +156,16 @@ define([
             console.log("clickAddItem");
             var title = $("input.title").val();
             var description = $("textarea.description").val();
+            var item;
             if (title){
-                this.collection.create({
+                item = this.collection.create({
                     title: title,
                     description: description,
                     status: 1
                 });
             }
+
+            // this.addOne(item);
         }
     });
 

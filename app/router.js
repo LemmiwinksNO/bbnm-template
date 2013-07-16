@@ -16,14 +16,39 @@ define([
 
 function(app, Todo, NotDoing){
     var Router = Backbone.Router.extend({
+        initialize: function(){
+
+            var collections = {
+                notdos: new NotDoing.Collection()
+            };
+
+            // var notdos = new NotDoing.Collection();
+
+            _.extend(this, collections);
+
+            // app.useLayout("main-layout");
+            // Set layout
+            // app.useLayout("main-layout").setView(
+            //     "#main", new NotDoing.Views.Main({
+            //         collection: notdos
+            //     })
+            // ).render();
+
+        },
+
         routes: {
             // Pages
             'mytodo': 'mytodo',
             'notdoing': 'notdoing',
             ''      : 'notdoing',
+            'test'  : 'test',
 
             // Default - catch all
             '*actions': 'defaultAction'
+        },
+
+        test: function(){
+
         },
 
         mytodo: function(){
@@ -36,9 +61,27 @@ function(app, Todo, NotDoing){
 
         notdoing: function(){
             var list = new NotDoing.Collection();
-            App = new NotDoing.Views.Main({
+
+            app.useLayout("main-layout");
+            app.layout.render();
+            app.layout.insertView("#main", new NotDoing.Views.Main({
                 collection: list
-            });
+            })).render();
+
+            // app.layout.render();
+
+            // var myLayout = app.useLayout("main-layout");
+            // myLayout.insertView("#main", new NotDoing.Views.Main({
+            //     collection: list
+            // })).render();
+
+            // app.layout.insertView("body", new NotDoing.View.Main({
+            //     collection: list
+            // })).render();
+
+            // App = new NotDoing.Views.Main({
+            //     collection: list
+            // });
         },
 
         defaultAction: function(){
