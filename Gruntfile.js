@@ -213,6 +213,19 @@ module.exports = function(grunt) {
         files: {
           'templates.js': 'app/templates/**/*.jade'
         }
+      },
+      debug: {
+        options: {
+          namespace: 'JST',
+          processName: function(filename){
+            return filename;
+          },
+          // You need the runtime but where do you want to include it.
+          includeRuntime: false
+        },
+        files: {
+          "<%= dist.debug %>templates.js": 'app/templates/**/*.jade'
+        }
       }
     }
 
