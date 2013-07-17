@@ -153,21 +153,6 @@ jade.escape = function escape(html){
 jade.rethrow = function rethrow(err, filename, lineno){
   if (!filename) throw err;
 
-  var context = 3
-    , str = require('fs').readFileSync(filename, 'utf8')
-    , lines = str.split('\n')
-    , start = Math.max(lineno - context, 0)
-    , end = Math.min(lines.length, lineno + context);
-
-  // Error context
-  var context = lines.slice(start, end).map(function(line, i){
-    var curr = i + start + 1;
-    return (curr == lineno ? '  > ' : '    ')
-      + curr
-      + '| '
-      + line;
-  }).join('\n');
-
   // Alter exception message
   err.path = filename;
   err.message = (filename || 'Jade') + ':' + lineno
@@ -183,7 +168,7 @@ attrs = attrs || jade.attrs; escape = escape || jade.escape; rethrow = rethrow |
 var buf = [];
 with (locals || {}) {
 var interp;
-buf.push('<h1>MAIN LAYOUT</h1><div id="main"></div>');
+buf.push('<h1>MAIN LAYOUT 12345</h1><div id="main"></div>');
 }
 return buf.join("");
 };

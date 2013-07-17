@@ -3,23 +3,24 @@ require.config({
   paths: {
     'jquery': '../vendor/jam/jquery/dist/jquery',
     'mocha'         : '../node_modules/mocha/mocha',
-    'chai'          : '../node_modules/chai/chai'
-    // 'chai-jquery'   : '../../vendor/js/libs/chai-jquery/chai-jquery',
+    'chai'          : '../node_modules/chai/chai',
+    'chai-jquery'   : '../../node_modules/chai-jquery/chai-jquery'
     // 'models'        : 'models',
     // 'notdoing'      : '../../app/modules/notdoing'
   },
   shim: {
-    // 'chai-jquery': ['jquery', 'chai']
+    'chai-jquery': ['jquery', 'chai']
   },
   urlArgs: 'bust=' + (new Date()).getTime()
 });
 
-require(['require', 'chai', 'mocha', 'jquery'], function(require, chai){
+require(['require', 'chai', 'chai-jquery', 'mocha', 'jquery'],
+  function(require, chai, chaiJquery){
 
   // Chai
   var should = chai.should();
   window.expect = chai.expect;
-  // chai.use(chaiJquery);
+  chai.use(chaiJquery);
 
   /*globals mocha */
   mocha.setup('bdd');

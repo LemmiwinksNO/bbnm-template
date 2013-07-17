@@ -11,7 +11,7 @@ module.exports = function(grunt) {
 
     // Runs the application JavaScript through JSHint with the defaults.
     jshint: {
-      files: ["app/**/*.js"]
+      files: ["app/*.js", "app/modules/**/*.js"]
     },
 
     // The jst task compiles all application templates into JavaScript
@@ -194,16 +194,19 @@ module.exports = function(grunt) {
     },
 
     // Could watch templates, and compile them. Then we ALWAYS have the JST
-    // object to get them from. This is the only way I can get jade on 
+    // object to get them from. This is the only way I can get jade on
     // client side.
     watch: {
-      scripts: {
-        files: ["**/*.js"],
-        tasks: ["shell:mocha-phantomjs"]
-      },
       templates: {
         files: ["app/**/*.jade"],
-        tasks: ["jade2js:dev"]
+        tasks: ["jade2js:dev"],
+        options: {
+          livereload: true
+        }
+      },
+      scripts: {
+        files: ["<%= jshint.files %>"],
+        tasks: ["jshint", "shell:mocha-phantomjs"]
       }
     },
 
@@ -259,7 +262,7 @@ module.exports = function(grunt) {
   // This will reset the build, be the precursor to the production
   // optimizations, and serve as a good intermediary for debugging.
   grunt.registerTask("debug", [
-    "clean", "jshint", "jade2js", "requirejs", "concat", "copy", "styles"
+    "clean", "jshint", "jade2js:debug", "requirejs", "concat", "copy", "styles"
   ]);
 
   // The release task will first run the debug tasks.  Following that, minify

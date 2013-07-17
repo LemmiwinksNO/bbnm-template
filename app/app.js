@@ -15,7 +15,6 @@ define([
   'jquery',
   'underscore',
   'backbone',
-  // 'jade',
 
   "backbone.layoutmanager",
   "bootstrap",
@@ -30,7 +29,6 @@ function($, _, Backbone, Layout) {
     // The root path to run the application through.
     root: "/"
   };
-
 
   // Localize or create a new JavaScript Template object.
   var JST = window.JST = window.JST || {};

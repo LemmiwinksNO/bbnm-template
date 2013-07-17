@@ -47,15 +47,11 @@ require.config({
     // Make vendor easier to access.
     "vendor": "../vendor",
     'bootstrap': '../vendor/bower/bootstrap.css/js/bootstrap',
-    'jade': '../vendor/bower/jade/jade',
     'templates': 'templates/templates'  // compiled jade templates
   },
 
   shim: {
-    'bootstrap': ['jquery'],
-    'jade': {
-      exports: 'Jade'
-    }
+    'bootstrap': ['jquery']
   },
 
   map: {
