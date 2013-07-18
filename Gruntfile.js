@@ -206,7 +206,10 @@ module.exports = function(grunt) {
       },
       scripts: {
         files: ["<%= jshint.files %>"],
-        tasks: ["jshint", "shell:mocha-phantomjs"]
+        tasks: ["jshint", "shell:mocha-phantomjs"],
+        options: {
+          livereload: true
+        }
       }
     },
 

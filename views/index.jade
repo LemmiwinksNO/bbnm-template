@@ -1,6 +1,18 @@
-extends layout
+!!!
+html
+  head
+    title= "Growth App"
 
-block content
-  div.container
-    h1 Program Name
-    p Hello World
+    //- Development
+    link(rel='stylesheet', href='/app/styles/index.css')
+    script(data-main='app/config', src='vendor/jam/require.js')
+
+    //- Production (I don't know why this doesn't work like source.js)
+    //- link(rel='stylesheet', href='/dist/release/app/styles/index.css')
+    //- script(data-main='app/config', src='/source.js')
+
+    | <style>
+    | body { padding-top: 60px; }
+    | </style>
+
+  body

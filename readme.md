@@ -40,12 +40,19 @@ npm install
 # elevated privileges using something like `sudo`.
 npm install jamjs bower -g
 
+jam install
+bower install
+
 # Updating the JamJS packages.
 jam upgrade
 
 # Updating the Bower packages.
 bower update
 ```
+
+## grunt-jade-plugin
+
+I use this tool to compile jade templates into javascript. The only problem is jade-runtime(included) requires('fs') -> node filesystem module. This causes problems with the requirejs grunt task. The solution I'm using is modiying the runtime file to not use require('fs'), so it works but the error messages will now be less helpful. The jade-runtime node module with updated runtime is already installed, don't change it! (until jade-runtime gets fixed to work with the browser.)
 
 ## Build process ##
 

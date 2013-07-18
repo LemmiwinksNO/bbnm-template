@@ -10,8 +10,6 @@
 
 define([
 
-  // Do we need to add libraries? Well backbone.layoutmanager depends on
-  // backbone, which depends on underscore and jquery.
   'jquery',
   'underscore',
   'backbone',
@@ -101,7 +99,7 @@ function($, _, Backbone, Layout) {
 
       // Create a new Layout with options.
       var layout = new Backbone.Layout(_.extend({
-        el: "#crucial"
+        el: "body"
       }, options));
 
       // Cache the refererence.

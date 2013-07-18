@@ -163,12 +163,32 @@ jade.rethrow = function rethrow(err, filename, lineno){
 
 this["JST"] = this["JST"] || {};
 
+this["JST"]['app/templates/footer.jade'] = function anonymous(locals, attrs, escape, rethrow, merge) {
+attrs = attrs || jade.attrs; escape = escape || jade.escape; rethrow = rethrow || jade.rethrow; merge = merge || jade.merge;
+var buf = [];
+with (locals || {}) {
+var interp;
+buf.push('<hr/><footer><p>&copy; Mark Industries</p></footer>');
+}
+return buf.join("");
+};
+
+this["JST"]['app/templates/header.jade'] = function anonymous(locals, attrs, escape, rethrow, merge) {
+attrs = attrs || jade.attrs; escape = escape || jade.escape; rethrow = rethrow || jade.rethrow; merge = merge || jade.merge;
+var buf = [];
+with (locals || {}) {
+var interp;
+buf.push('<div class="navbar navbar-inverse navbar-fixed-top"><div class="navbar-inner"><div class="container"><a data-toggle="collapse" data-target=".nav-collapse" class="btn btn-navbar"><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></a><a href="#" class="brand">Growth App</a><div class="nav-collapse collapse"><ul class="nav"><li class="active"><a href="#">Home</a></li><li><a href="#about">About</a></li><li><a href="#contact">Contact</a></li></ul></div></div></div></div>');
+}
+return buf.join("");
+};
+
 this["JST"]['app/templates/main-layout.jade'] = function anonymous(locals, attrs, escape, rethrow, merge) {
 attrs = attrs || jade.attrs; escape = escape || jade.escape; rethrow = rethrow || jade.rethrow; merge = merge || jade.merge;
 var buf = [];
 with (locals || {}) {
 var interp;
-buf.push('<h1>MAIN LAYOUT 12345</h1><div id="main"></div>');
+buf.push('<div class="navbar navbar-inverse navbar-fixed-top"><div class="navbar-inner"><div class="container"><a data-toggle="collapse" data-target=".nav-collapse" class="btn btn-navbar"><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></a><a href="#" class="brand">Growth App</a><div class="nav-collapse collapse"><ul class="nav"><li class="active"><a href="#">Home</a></li><li><a href="#about">About</a></li><li><a href="#contact">Contact</a></li></ul></div></div></div></div><div class="container"><h1>MAIN LAYOUT 126</h1><div id="main"></div></div><hr/><footer><p>&copy; Mark Industries</p></footer>');
 }
 return buf.join("");
 };
