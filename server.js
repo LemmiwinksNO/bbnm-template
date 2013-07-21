@@ -17,7 +17,7 @@ var app = module.exports = express();  // export so we can use it for tests
 
 app.configure(function(){
   app.set('port', process.env.PORT || 3000);
-  app.set('env', process.argv[2] || 'development');  // Now you can set environment via command line.
+  app.set('env', process.env.NODE_ENV || process.argv[2] || 'development');  // Now you can set environment via command line.
   app.set('view engine', 'jade');
   app.set('view options', { layout: true });
   app.set('views', __dirname + '/views');  // development views

@@ -2,9 +2,8 @@
   "name": "bbnm template",
   "version": "0.0.1",
   "dependencies": {
-    "requirejs-text": "~2.0.7",
     "almond": "~0.2.5",
-    "sass-bootstrap": "~2.3.2",
-    "bootstrap.css": "~2.3.2"
+    "bootstrap.css": "~2.3.2",
+    "sass-bootstrap": "~2.3.2"
   }
 }

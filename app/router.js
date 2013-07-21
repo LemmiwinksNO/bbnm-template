@@ -1,21 +1,21 @@
 
-// define(function(require, exports, module){
-
-//     var Backbone = require("backbone");
-//     var Todo = require("modules/todo");
-//     var NotDoing = require("modules/notdoing");
-
 define([
   // Application.
   "app",
 
   // Modules.
-  "modules/todo",
+  // "modules/todo"
   "modules/notdoing"
 ],
 
-function(app, Todo, NotDoing){
+function(app, NotDoing){
     var Router = Backbone.Router.extend({
+        initialize: function(){
+            // Set layout
+            app.useLayout("main-layout").render();
+
+        },
+
         routes: {
             // Pages
             'mytodo': 'mytodo',
@@ -31,14 +31,14 @@ function(app, Todo, NotDoing){
             App = new Todo.Views.List({
                 collection: list
             });
-
         },
 
         notdoing: function(){
             var list = new NotDoing.Collection();
-            App = new NotDoing.Views.Main({
+
+            app.layout.setView("#main", new NotDoing.Views.Main({
                 collection: list
-            });
+            })).render();
         },
 
         defaultAction: function(){

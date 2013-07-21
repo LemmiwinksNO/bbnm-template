@@ -1,28 +1,16 @@
 
-// define(function(require, exports, module) {
-
-//   // External dependencies
-//   var $ = require("jquery");
-//   var _ = require("underscore");
-//   var Backbone = require("backbone");
-//   // var LayoutManager = require("backbone.layoutmanager");
-//   var Bootstrap = require("bootstrap");
-
 define([
 
-  // Do we need to add libraries? Well backbone.layoutmanager depends on
-  // backbone, which depends on underscore and jquery.
   'jquery',
   'underscore',
   'backbone',
 
-  // "backbone.layoutmanager",
-  "bootstrap"
+  "backbone.layoutmanager",
+  "bootstrap",
+  "templates"
 ],
 
-function($, _, Backbone) {
-
-
+function($, _, Backbone, Layout) {
 
   // Provide a global location to place configuration settings and module
   // creation.
@@ -32,34 +20,26 @@ function($, _, Backbone) {
   };
 
   // Localize or create a new JavaScript Template object.
-  // var JST = window.JST = window.JST || {};
+  var JST = window.JST = window.JST || {};
 
-  // // Configure LayoutManager with Backbone Boilerplate defaults.
-  // Backbone.Layout.configure({
-  //   // Allow LayoutManager to augment Backbone.View.prototype.
-  //   manage: true,
+  // Configure LayoutManager with Backbone Boilerplate defaults.
+  Backbone.Layout.configure({
+    // Allow LayoutManager to augment Backbone.View.prototype.
+    manage: true,
 
-  //   prefix: "app/templates/",
+    // Indicate where templates are stored
+    prefix: "app/templates/",
 
-  //   fetch: function(path) {
-  //     // Concatenate the file extension.
-  //     path = path + ".html";
+    // This custom fetch method will load pre-compiled templates
+    fetch: function(path) {
 
-  //     // If cached, use the compiled template.
-  //     if (JST[path]) {
-  //       return JST[path];
-  //     }
+      // Concatenate the file extension.
+      path = path + ".jade";
 
-  //     // Put fetch into `async-mode`.
-  //     var done = this.async();
-
-  //     // Seek out the template asynchronously.
-  //     console.log(" path ", path);
-  //     $.get(app.root + path, function(contents) {
-  //       done(JST[path] = _.template(contents));
-  //     });
-  //   }
-  // });
+      // Return pre-compiled template. (We can't compile on the fly with Jade)
+      return JST[path];
+    }
+  });
 
   // Mix Backbone.Events, modules, and layout management into the app object.
   return _.extend(app, {
@@ -86,11 +66,14 @@ function($, _, Backbone) {
 
       // Create a new Layout with options.
       var layout = new Backbone.Layout(_.extend({
-        el: "#main"
+        el: "body"
       }, options));
 
       // Cache the refererence.
       this.layout = layout;
+
+      // Return the reference, for chainability
+      return layout;
     }
   }, Backbone.Events);
 
