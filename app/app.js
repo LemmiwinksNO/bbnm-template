@@ -1,13 +1,4 @@
 
-// define(function(require, exports, module) {
-
-//   // External dependencies
-//   var $ = require("jquery");
-//   var _ = require("underscore");
-//   var Backbone = require("backbone");
-//   // var LayoutManager = require("backbone.layoutmanager");
-//   var Bootstrap = require("bootstrap");
-
 define([
 
   'jquery',
@@ -39,38 +30,14 @@ function($, _, Backbone, Layout) {
     // Indicate where templates are stored
     prefix: "app/templates/",
 
-    // This custom fetch method will load pre-compiled templates or
-    // fetch them remotely with AJAX.
+    // This custom fetch method will load pre-compiled templates
     fetch: function(path) {
 
       // Concatenate the file extension.
       path = path + ".jade";
 
-      // console.log(JST[path]);
-
+      // Return pre-compiled template. (We can't compile on the fly with Jade)
       return JST[path];
-
-      // If the template has not been loaded yet, then load.
-      // if (!JST[path]) {
-      //   done = this.async();
-      //   return $.ajax({ url: app.root + path }).then(function(contents) {
-      //     console.log(contents);
-      //     JST[path] = Jade.compile(contents);
-      //     JST[path].__compiled__ = true;
-
-      //     done(JST[path]);
-      //   });
-      // }
-
-      // return JST[path];
-
-      // If the template hasn't been compiled yet, then compile.
-      // if (!JST[path].__compiled__) {
-      //   JST[path] = Jade.template(JST[path]);
-      //   JST[path].__compiled__ = true;
-      // }
-
-      // return JST[path];
     }
   });
 

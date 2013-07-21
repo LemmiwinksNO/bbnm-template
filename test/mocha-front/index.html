@@ -17,7 +17,10 @@
   <!-- Testing libraries. -->
   <!-- // <script src="../../node_modules/chai.js"></script> -->
   <!-- // <script src="../../node_modules/mocha.js"></script> -->
-  <script data-main="../../app/config" src="../../vendor/jam/require.js"></script>
+
+  <!-- Could data-main test-runner.js and put config stuff in there. That way you control testing. -->
+  <!-- I have this set to main, but it could be config. You don't need to load up the whole app right away. -->
+  <script data-main="../../app/main" src="../../vendor/jam/require.js"></script>
 
   <!-- Declare your spec files to be run inside this file. -->
   <script src="test-runner.js"></script>

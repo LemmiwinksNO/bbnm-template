@@ -1,12 +1,12 @@
 
-// This is the runtime configuration file.  It complements the Gruntfile.js by
-// supplementing shared properties.
+// Set the require.js configuration for your application.
 require.config({
 
-  deps: ["main"],  // Initialize the application with the main application file.
+  // Initialize the application with the main application file and the JamJS
+  // generated configuration file.
+  // deps: ["../vendor/jam/require.config", "main"],
 
   paths: {
-    // Make vendor easier to access.
     "vendor": "../vendor",
     'bootstrap': '../vendor/bower/bootstrap.css/js/bootstrap',
     'templates': 'templates/templates'  // compiled jade templates

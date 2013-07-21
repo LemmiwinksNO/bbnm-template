@@ -124,43 +124,6 @@ module.exports = function(grunt) {
     // that no files linger from previous builds.
     clean: ["dist/"],
 
-    // server: {
-    //   map: {
-    //     // Point to the Jam `require.js` file because it includes all package
-    //     // paths automatically.
-    //     "source.js": "vendor/jam/require.js",
-
-    //     // Keep the styles file generic to make running from the `dist/`
-    //     // directory easier.
-    //     "styles.css": "app/styles/index.css"
-    //   },
-
-    //   // Specifically used for testing the application.
-    //   test: {
-    //     // map: "<%= server.map %>",
-    //     // forever: false,
-    //     // port: 8001
-    //   },
-
-    //   debug: {
-    //     map: {
-    //       "source.js": "<%= dist.debug %>source.js",
-    //       "app/styles/index.css": "<%= dist.debug %>app/styles/index.css"
-    //     }
-    //   },
-
-    //   release: {
-    //     map: {
-    //       "debug/source.js": "<%= dist.release %>debug/source.js",
-    //       "source.js": "<%= dist.release %>source.js",
-    //       "app/styles/index.css": "<%= dist.release %>app/styles/index.css",
-
-    //       // Necessary for SourceMap debugging.
-    //       "source.js.map": "<%= dist.release %>source.js.map"
-    //     }
-    //   }
-    // },
-
     // Move vendor and app logic during a build.
     copy: {
       debug: {
@@ -197,6 +160,15 @@ module.exports = function(grunt) {
     // object to get them from. This is the only way I can get jade on
     // client side.
     watch: {
+      // options: {  // This should add live reloading to ALL watch targets.
+      //   livereload: true
+      // },
+      // livereload: {  // This should work too.
+      //   files: ['*.jade', '*.js'],
+      //   options: {
+      //     livereload: true
+      //   }
+      // },
       templates: {
         files: ["app/**/*.jade"],
         tasks: ["jade2js:dev"],
@@ -208,7 +180,7 @@ module.exports = function(grunt) {
         files: ["<%= jshint.files %>"],
         tasks: ["jshint", "shell:mocha-phantomjs"],
         options: {
-          livereload: true
+          livereload: true  // maybe we should set this to another port number. Maybe that is why it doesn't work.
         }
       }
     },
