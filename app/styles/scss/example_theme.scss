@@ -1,0 +1,185 @@
+@import 'compass/css3/border-radius';
+@import 'compass/css3/box-shadow';
+
+$font-family-sans: 'Droid Sans', sans-serif;
+$font-family-serif: 'Droid Serif', serif;
+
+$base-line-height: 1.231;
+
+// brown-grey
+$color-0-light: #F2F2F2; // main background
+$color-0-dark: #C5CED3;
+
+// gray
+$color-1-dark: #363636;
+$color-1-medium: #b9b6a7;
+$color-1-medium-light: #7991AF;
+$color-1-super-light: #ebece5;
+
+//brown
+$color-1-light: #ccc;
+
+// blue
+$color-2-dark: #002e5c;
+$color-2-medium: #0773b4;
+$color-2-light: #005fa1;
+
+// green
+$color-3-dark: #698202;
+$color-3-light: #99bb00;
+
+// white
+$color-4-medium: #f7f3e8;
+$color-4-light: #fff;
+
+// blue-grey
+$color-5-medium: #bcbcc4;
+$color-5-light: #e2e2e0;
+
+// red
+$color-error: #ed1c24;
+
+// yellow
+$color-7-dark: #ecdd76;
+$color-7-light: #fefbaa;
+
+@font-face {
+    font-family: 'AgileLawIcons';
+    src: url('/css/agilelaw_icons.eot');
+    src: url('/css/agilelaw_icons.eot?#iefix') format('embedded-opentype'),
+         url('/css/agilelaw_icons.woff') format('woff'),
+         url('/css/agilelaw_icons.ttf') format('truetype'),
+         url('/css/agilelaw_icons.svg#agilelawiconsregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+// UI
+@mixin show-more-button {
+    text-align: center;
+    font-size: 11px;
+    font-weight: 700;
+    line-height: 25px;
+    color: $color-2-dark;
+    min-height: 25px;
+    cursor: default;
+    background: 
+        242px 7px url(/img/double_arrow_down.png) no-repeat, 
+        402px 7px url(/img/double_arrow_down.png) no-repeat $color-1-light;
+    display: block;
+
+    .hidden {
+        display:none !important;
+    }
+    &:hover {
+        background-color: $color-1-medium-light;
+    }
+}
+
+@mixin std-button {
+    font-family: $font-family-sans;
+    font-weight: 700;
+    background-color: $color-1-light;
+    border: 1px solid $color-1-medium;
+    color: $color-2-light;
+    text-align: center;
+    @include border-radius(2px, 2px);
+    cursor: pointer;
+}
+
+@mixin submit-button {
+    @include std-button;
+
+    background-color: $color-2-medium;
+    color: $color-4-light;
+    border: 1px solid $color-4-light;
+    line-height: 24px;
+    @include border-radius(4px, 4px);
+}
+
+@mixin std-link {
+    color: $color-2-light;
+
+    &:hover {
+        cursor: pointer;
+        text-decoration: underline;
+    }
+}
+
+@mixin agilelaw-icons {
+    font-family: 'AgileLawIcons';
+    line-height: 1;
+    font-weight: normal;
+    font-style: normal;
+    text-decoration: inherit;
+    -webkit-font-smoothing: antialiased;
+    text-decoration: none;
+    display: inline-block;
+}
+
+@mixin tool-tip($width: 100px, $offset_x: 20px, $offset_y: 30px) {
+
+    .message {
+        z-index: 9000;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+        position: absolute;
+        bottom: $offset_y;
+        left: -$offset_x;
+        margin: 0 auto;
+        padding: 1em;
+        color: #ffffff;
+        text-shadow: 0 -1px 0 #000000;
+        font-weight: 400;
+        font-size: 14px;
+        text-align: center;
+        line-height: 16px;
+        border-radius: 3px;
+        background: #333333;
+        background: rgba(0, 0, 0, 0.9);
+        visibility: hidden;
+        opacity: 0;
+        width: $width;
+
+        // "bridge the gap" - let's the mouse hover over the
+        // tool tip without it going away
+        &:before,&::before{
+            content: " ";
+            display: block;
+            position: absolute;
+            height: 20px;
+            bottom: -20px;
+            width: 100%;
+        }
+
+        // the triangle pointer
+        &:after,&::after{
+            content: '';
+            display: block;
+            position: absolute;
+            bottom: -6px;
+            left: $offset_x + 2;
+            width: 0;
+            height: 0;
+            border-left: 6px solid transparent;
+            border-right: 6px solid transparent;
+            border-top: 6px solid #333333;
+            border-top-color: rgba(0, 0, 0, 0.9);
+        }
+    }
+
+    &:hover .message {
+        cursor:auto;
+        display: block;
+        visibility: visible;
+        opacity: 1;
+        -webkit-transform: translate3d(0, 0, 0);
+        -moz-transform: translate3d(0, 0, 0);
+    }
+
+}
+
+@mixin tool-tip-centered($width, $object_width: 0px, $offset_y: 30px) {
+    $offset_x: ($width / 2) - ($object_width / 2);
+    @include tool-tip($width, $offset_x, $offset_y);
+}

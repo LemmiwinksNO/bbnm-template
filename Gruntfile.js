@@ -28,23 +28,24 @@ module.exports = function(grunt) {
     // projects.  Instead of manually specifying your stylesheets inside the
     // ration, you can use `@imports` and this task will concatenate
     // only those paths.
-    styles: {
-      // Out the concatenated contents of the following styles into the below
-      // development file path.
-      "<%= dist.debug %>app/styles/index.css": {
-        // Point this to where your `index.css` file is location.
-        src: "app/styles/index.css",
+    // NOTE: Don't need this with the way we are using sass.
+    // styles: {
+    //   // Out the concatenated contents of the following styles into the below
+    //   // development file path.
+    //   "<%= dist.debug %>app/styles/index.css": {
+    //     // Point this to where your `index.css` file is location.
+    //     src: "app/styles/index.css",
 
-        // The relative path to use for the @imports.
-        paths: ["app/styles"],
+    //     // The relative path to use for the @imports.
+    //     paths: ["app/styles"],
 
-        // Point to where styles live.
-        prefix: "app/styles/",
+    //     // Point to where styles live.
+    //     prefix: "app/styles/",
 
-        // Additional production-only stylesheets here.
-        additional: []
-      }
-    },
+    //     // Additional production-only stylesheets here.
+    //     additional: []
+    //   }
+    // },
 
     // This task uses James Burke's excellent r.js AMD builder to take all
     // modules and concatenate them into a single file.
@@ -130,7 +131,7 @@ module.exports = function(grunt) {
         files: [
           { src: ["app/**"], dest: "<%= dist.debug %>" },
           { src: "vendor/**", dest: "<%= dist.debug %>" },
-          { src: "index.html", dest: "<%= dist.debug %>index.html" },
+          // { src: "index.html", dest: "<%= dist.debug %>index.html" },
           { src: "views/**", dest: "<%= dist.debug %>"}
         ]
       },
@@ -139,7 +140,7 @@ module.exports = function(grunt) {
         files: [
           { src: ["app/**"], dest: "<%= dist.release %>" },
           { src: "vendor/**", dest: "<%= dist.release %>" },
-          { src: "index.html", dest: "<%= dist.release %>index.html" },
+          // { src: "index.html", dest: "<%= dist.release %>index.html" },
           { src: "views/**", dest: "<%= dist.release %>"},
           { src: "<%= dist.debug %>source.js", dest: "<%= dist.release %>debug/source.js" }
         ]
@@ -156,32 +157,32 @@ module.exports = function(grunt) {
       }
     },
 
+    sass: {
+      dev: {
+        files: {
+          'app/styles/index.css': 'app/styles/scss/index.scss'
+        }
+      }
+    },
+
     // Could watch templates, and compile them. Then we ALWAYS have the JST
     // object to get them from. This is the only way I can get jade on
     // client side.
     watch: {
-      // options: {  // This should add live reloading to ALL watch targets.
-      //   livereload: true
-      // },
-      // livereload: {  // This should work too.
-      //   files: ['*.jade', '*.js'],
-      //   options: {
-      //     livereload: true
-      //   }
-      // },
+      options: {  // This should add live reloading to ALL watch targets.
+        livereload: true
+      },
       templates: {
         files: ["app/**/*.jade"],
-        tasks: ["jade2js:dev"],
-        options: {
-          livereload: true
-        }
+        tasks: ["jade2js:dev"]
       },
       scripts: {
         files: ["<%= jshint.files %>"],
-        tasks: ["jshint", "shell:mocha-phantomjs"],
-        options: {
-          livereload: true  // maybe we should set this to another port number. Maybe that is why it doesn't work.
-        }
+        tasks: ["jshint", "shell:mocha-phantomjs"]
+      },
+      sass: {
+        files: ["app/styles/scss/*.scss"],
+        tasks: ["sass:dev"]
       }
     },
 
@@ -222,22 +223,23 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks("grunt-contrib-cssmin");
   grunt.loadNpmTasks("grunt-contrib-clean");
   grunt.loadNpmTasks("grunt-contrib-copy");
-  grunt.loadNpmTasks("grunt-shell");
   grunt.loadNpmTasks("grunt-contrib-watch");
+  grunt.loadNpmTasks('grunt-contrib-sass');
   grunt.loadNpmTasks('grunt-jade-plugin');
+  grunt.loadNpmTasks("grunt-shell");
 
   // Third-party tasks.
   // grunt.loadNpmTasks("grunt-karma");
 
   // Grunt BBB tasks.
-  grunt.loadNpmTasks("grunt-bbb-server");
+  // grunt.loadNpmTasks("grunt-bbb-server");
   grunt.loadNpmTasks("grunt-bbb-requirejs");
-  grunt.loadNpmTasks("grunt-bbb-styles");
+  // grunt.loadNpmTasks("grunt-bbb-styles");
 
   // This will reset the build, be the precursor to the production
   // optimizations, and serve as a good intermediary for debugging.
-  grunt.registerTask("debug", [
-    "clean", "jshint", "jade2js:debug", "requirejs", "concat", "copy", "styles"
+  grunt.registerTask("debug", [ // I cut out styles.
+    "clean", "jshint", "jade2js:debug", "requirejs", "concat", "copy"
   ]);
 
   // The release task will first run the debug tasks.  Following that, minify

@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "dependencies": {
     "almond": "~0.2.5",
-    "bootstrap.css": "~2.3.2"
+    "bootstrap.css": "~2.3.2",
+    "sass-bootstrap": "~2.3.2"
   }
 }
