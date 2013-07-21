@@ -1,0 +1,40 @@
+div.row
+  div.span4.column1
+    h2 Not Doing
+      span
+        i#add-item-modal.icon-plus
+    ul.unstyled
+  div.span4.column2
+    h2 Doing
+    ul.unstyled
+  div.span4.column3
+    h2 Done
+    ul.unstyled
+
+//- Add Modal
+div#add-modal.modal.hide.fade(tabindex="-1", role="dialog",
+              aria-labelledby="add-modal-label", aria-hidden="true")
+  div.modal-header
+    button.close(type="button", data-dismiss="modal", aria-hidden="true") x
+    h3#add-modal-label Add Item
+  div.modal-body
+    form
+      input.title.span5(type="text", placeholder="Title")
+      textarea.description.span5(rows="3", placeholder="Description")
+  div.modal-footer
+    button.btn(data-dismiss="modal", aria-hidden="true") Close
+    button#add-item.btn.btn-primary Add Item
+
+//- Edit Modal
+div#edit-modal.modal.hide.fade(tabindex="-1", role="dialog",
+              aria-labelledby="edit-modal-label", aria-hidden="true")
+  div.modal-header
+    button.close(type="button", data-dismiss="modal", aria-hidden="true") x
+    h3#edit-modal-label Add Item
+  div.modal-body
+    form
+      input.title.span5(type="text", placeholder="Title")
+      textarea.description.span5(rows="3", placeholder="Description")
+  div.modal-footer
+    button.btn(data-dismiss="modal", aria-hidden="true") Close
+    button#save-item.btn.btn-primary Add Item

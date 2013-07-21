@@ -1,10 +1,10 @@
-.item {
-    /*border: 1px solid black;*/
-    margin: 3px 0 3px 3px;
-    display: inline-block;
-}
 
-.item .title {
+.item {
+  /*border: 1px solid black;*/
+  margin: 3px 0 3px 3px;
+  display: inline-block;
+
+  .title {
     display: inline;
     position: relative;
     background: #eeeeee;
@@ -18,8 +18,7 @@
     width: 50%;
 }
 
-.item .edit-item,
-.item .delete-item {
+  .edit-item{
     display: inline;
     position: relative;
     line-height: 23px;
@@ -29,10 +28,13 @@
     margin-right: -4px;
     padding-left: 8px;
     padding-right: 8px;
-}
+    cursor: pointer;
+  }
 
-.item .delete-item {
-    border-radius: 0 4px 4px 0;
+  .delete-item {
+  	@extend .edit-item;
+  	border-radius: 0 4px 4px 0;
+  }
 }
 
 h2 {
@@ -43,14 +45,12 @@ h2 {
     cursor: pointer;
 }
 
-input.title,
-textarea.description {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.delete-item,
-.edit-item {
-    cursor: pointer;
+#add-modal,
+#edit-modal {
+	input.title,
+	textarea.description {
+	    display: block;
+	    margin-left: auto;
+	    margin-right: auto;
+	}
 }

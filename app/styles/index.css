@@ -1,9 +1,0 @@
-/*-- Bootstrap. -------------------------------------------------------------*/
-
-@import "../../vendor/bower/bootstrap.css/css/bootstrap.css";
-@import "../../vendor/bower/bootstrap.css/css/bootstrap-responsive.css";
-
-/*-- Application stylesheets. -----------------------------------------------*/
-
-/*@import "todo.css";*/
-@import "notdoing.css";
