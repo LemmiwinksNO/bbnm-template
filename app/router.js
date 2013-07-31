@@ -11,8 +11,11 @@ define([
 function(app, NotDoing){
     var Router = Backbone.Router.extend({
         initialize: function(){
+            // Instantiate collections if needed
+
             // Set layout
             app.useLayout("main-layout").render();
+
 
         },
 
@@ -26,11 +29,8 @@ function(app, NotDoing){
             '*actions': 'defaultAction'
         },
 
-        mytodo: function(){
-            var list = new Todo.Collection();
-            App = new Todo.Views.List({
-                collection: list
-            });
+        index: function(){
+
         },
 
         notdoing: function(){
@@ -41,10 +41,16 @@ function(app, NotDoing){
             })).render();
         },
 
+        mytodo: function(){
+            var list = new Todo.Collection();
+            App = new Todo.Views.List({
+                collection: list
+            });
+        },
+
         defaultAction: function(){
             console.log("defaultAction");
         }
-
     });
 
     return Router;

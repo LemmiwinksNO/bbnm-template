@@ -24,28 +24,28 @@ module.exports = function(grunt) {
       }
     },
 
+    // NOTE: Don't need this with the way we are using sass.
     // This task simplifies working with CSS inside Backbone Boilerplate
     // projects.  Instead of manually specifying your stylesheets inside the
     // ration, you can use `@imports` and this task will concatenate
     // only those paths.
-    // NOTE: Don't need this with the way we are using sass.
-    // styles: {
-    //   // Out the concatenated contents of the following styles into the below
-    //   // development file path.
-    //   "<%= dist.debug %>app/styles/index.css": {
-    //     // Point this to where your `index.css` file is location.
-    //     src: "app/styles/index.css",
+    styles: {
+      // Out the concatenated contents of the following styles into the below
+      // development file path.
+      "<%= dist.debug %>app/styles/index.css": {
+        // Point this to where your `index.css` file is location.
+        src: "app/styles/index.css",
 
-    //     // The relative path to use for the @imports.
-    //     paths: ["app/styles"],
+        // The relative path to use for the @imports.
+        paths: ["app/styles"],
 
-    //     // Point to where styles live.
-    //     prefix: "app/styles/",
+        // Point to where styles live.
+        prefix: "app/styles/",
 
-    //     // Additional production-only stylesheets here.
-    //     additional: []
-    //   }
-    // },
+        // Additional production-only stylesheets here.
+        additional: []
+      }
+    },
 
     // This task uses James Burke's excellent r.js AMD builder to take all
     // modules and concatenate them into a single file.

@@ -6,7 +6,7 @@ var notdoing = function(app, mongoose) {
   var notDoSchema = mongoose.Schema({
     title: String,
     description: String,
-    status: Number
+    status: String
   });
   var NotDo = mongoose.model('NotDo', notDoSchema);
 

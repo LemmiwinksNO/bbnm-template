@@ -5867,5 +5867,8 @@ h2 {
   display: block;
   margin-left: auto;
   margin-right: auto; }
+#add-modal .text-error,
+#edit-modal .text-error {
+  margin-left: 2em; }
 
 /*@import "todo";*/

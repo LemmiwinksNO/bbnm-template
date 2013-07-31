@@ -1,10 +1,8 @@
 
 define([
-
   'jquery',
   'underscore',
   'backbone',
-
   "backbone.layoutmanager",
   "bootstrap",
   "templates"

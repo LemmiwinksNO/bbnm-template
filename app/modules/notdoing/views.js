@@ -17,8 +17,6 @@ define([
 
         tagName: "li",
 
-        // template: Handlebars.compile(ItemView),
-        // template: _.template(ItemView),
         template: "notdoing/item",
 
         events: {
@@ -28,19 +26,14 @@ define([
 
         // serialize is what goes to your template
         serialize: function(){
-            return {model: this.model };
+            return {model: this.model};
         },
 
         initialize: function() {
             this.listenTo(this.model, 'change', this.render);
-            // this.listenTo(this.model, 'destroy', this.remove);
+            this.listenTo(this.model, 'destroy', this.remove);
             // this.render();
         },
-
-        // render: function() {
-        //     // this.$el.html(this.template(this.model.toJSON()));
-        //     return this;
-        // },
 
         /**
          * Edit an existing item.
@@ -63,20 +56,31 @@ define([
             }.bind(this));
         },
 
+        /**
+         * Set and validate model before saving.
+         */
         clickSave: function() {
-            this.model.save({
+            console.log("clickSave");
+            var valid = this.model.set({
                 title: $("#edit-modal input.title").val(),
                 description: $("#edit-modal .description").val()
+            }, {
+                validate: true  // set now returns true or false
             });
-            $("#edit-modal").modal('hide');
+
+            if (valid){
+                this.model.save();
+            }
         },
 
         clickDelete: function() {
             this.model.destroy();
             this.$el.remove();
+        },
+
+        remove: function() {
+            this.$el.remove();
         }
-
-
     });
 
     // Not Doing List Main View
@@ -84,8 +88,6 @@ define([
 
     Views.Main = Backbone.View.extend({
 
-        // template: Handlebars.compile(MainView),
-        // template: _.template(MainView),
         template: "notdoing/main",
 
         events: {
@@ -95,18 +97,21 @@ define([
         },
 
         initialize: function() {
-            // this.$el.html(this.template);
-
             // Add listeners to the collection
             this.listenTo(this.collection, 'add', this.addOne);
+            this.listenTo(this.collection, 'invalid', this.invalid);
+
+            // this.collection.on('all', function(event_name){
+            //     console.log(event_name);
+            // });
 
             this.collection.fetch();
-
-            this.listenTo(this.collection, 'reset', this.render);
         },
 
+        // This is typically how you render a collection with
+        // LayoutManager, but I chose to use addOne b/c it renders
+        // the collection and handles user adding stories.
         // beforeRender: function(){
-        //     console.log("beforeRender");
         //     this.collection.each(function(item){
         //         this.insertView(".column1 ul", new Views.Item({
         //             model: item
@@ -114,25 +119,33 @@ define([
         //     }.bind(this));
         // },
 
-        // render: function() {
-        //     // var options = {
-        //     //     title: "Task"
-        //     // };
-        //     // var view = new Views.Item({model: options});
-        //     // this.$(".column1 ul").append(view.render().el);
-        // },
-
+        /**
+         * Create a new notdo item view and insert it. Fires on add event.
+         * @param  {model} notdo Notdo item
+         */
         addOne: function(notdo) {
-            var column = ".column" + notdo.get("status");
-            this.insertView(column + " ul", new Views.Item({
-                model: notdo
-            })).render();
+            if (notdo.isValid()) {
+                var selector = "." + notdo.get("status") + " ul";
+                this.insertView(selector, new Views.Item({
+                    model: notdo
+                })).render();
+            }
+        },
+
+        invalid: function(model, errors) {
+            this.$('.text-error').removeClass('hidden');
+
+            // Load up error messages.
+            _.each(errors, function(error){
+                this.$('.text-error').text(error.message);
+            });
         },
 
         /**
          * Load up modal for adding items and focus first input field.
          */
         clickAddModal: function() {
+            this.$('.text-error').addClass('hidden');
             this.$el.find("#add-modal").modal();
             this.$("#add-modal").on('shown', function() {
                 $(this).find("input.title").focus();
@@ -143,15 +156,29 @@ define([
          * Add item to not doing list
          */
         clickAddItem: function() {
-            var title = $("input.title").val();
-            var description = $("textarea.description").val();
-            if (title){
-                this.collection.create({
-                    title: title,
-                    description: description,
-                    status: 1
-                });
-            }
+            this.$('.text-error').addClass('hidden');  // hide error messages
+            var title = this.$("input.title").val();
+            var description = this.$("textarea.description").val();
+
+            this.collection.create({
+                title: title,
+                description: description,
+                status: 'notdoing'
+            }, {
+                // wait: true,  // wait for response from server
+                // // server callbacks
+                // success: function(resp){
+                //     console.log('success callback');
+                // },
+                // error: function(resp){
+                //     console.log('error callback');
+                // }
+            });
+
+            // Clear out input fields and focus title field.
+            this.$("input.title").val('');
+            this.$("textarea.description").val('');
+            this.$("input.title").focus();
         }
     });
 
