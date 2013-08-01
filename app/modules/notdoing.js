@@ -25,7 +25,9 @@ define([
         defaults: {
             title: '',
             description: '',
-            status: ''  // backlog, notdoing, doing, done, finished
+            goal: '',
+            status: '',  // backlog, notdoing, doing, done, finished
+            updated: ''
         },
 
         // Validate on creation of new model instance.
@@ -70,6 +72,11 @@ define([
 
         // Save all of the notdoing items under the "notdoing" namespace.
         url: '/api/notdoing',
+
+        // Ust this to maintain a collection in sorted order. 
+        comparator: function(notdo) {
+          return notdo.get("status");  // sort by status
+        },
 
         // Filter down list of notdo items to backlog items
         backlog: function() {

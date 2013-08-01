@@ -4,9 +4,12 @@ var notdoing = function(app, mongoose) {
   // Schema
 
   var notDoSchema = mongoose.Schema({
-    title: String,
+    title: { type: String, required: true },
+    goal: String,
     description: String,
-    status: String
+    status: String,
+    updated: { type: Date, default: Date.now },
+    completed: Date
   });
   var NotDo = mongoose.model('NotDo', notDoSchema);
 
@@ -20,12 +23,15 @@ var notdoing = function(app, mongoose) {
   app.post('/api/notdoing', function(req, res){
     var notdo = new NotDo({
       title: req.body.title,
+      goal: req.body.goal,
       description: req.body.description,
       status: req.body.status
     });
     notdo.save(function(err) {
       if (!err) {
         console.log("created");
+      } else {
+        console.log("Error saving notdo item.");
       }
     });
   });
@@ -33,6 +39,7 @@ var notdoing = function(app, mongoose) {
   app.put('/api/notdoing/:id', function(req, res){
     NotDo.findById(req.params.id, function(err, notdo) {
       notdo.title = req.body.title;
+      notdo.goal = req.body.goal;
       notdo.description = req.body.description;
       notdo.save(function(err) {
         if (!err) {

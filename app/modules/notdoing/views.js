@@ -4,7 +4,11 @@ define([
     // libs
     'jquery',
     'underscore',
-    'backbone'
+    'backbone',
+    'bootstrap',
+
+    // plugins
+    'wysiwyg'
 
 ], function(app, $, _, Backbone) {
 
@@ -32,7 +36,6 @@ define([
         initialize: function() {
             this.listenTo(this.model, 'change', this.render);
             this.listenTo(this.model, 'destroy', this.remove);
-            // this.render();
         },
 
         /**
@@ -40,9 +43,14 @@ define([
          * Load up edit modal.
          */
         clickEdit: function() {
-            // Create modal and set input fields
+            console.log(this.$el);
+            // Fill inputs and description
             $("#edit-modal input.title").val(this.model.get("title"));
-            $("#edit-modal .description").val(this.model.get("description"));
+            $("#edit-modal input.goal").val(this.model.get("goal"));
+            $("#edit-modal .description").html(this.model.get("description"));
+
+            // Create modal
+            $("#edit-modal .editor").wysiwyg();
             $("#edit-modal").modal();
 
             // Focus first input field
@@ -60,10 +68,10 @@ define([
          * Set and validate model before saving.
          */
         clickSave: function() {
-            console.log("clickSave");
             var valid = this.model.set({
                 title: $("#edit-modal input.title").val(),
-                description: $("#edit-modal .description").val()
+                goal: $("#edit-modal input.goal").val(),
+                description: $("#edit-modal .description").html()
             }, {
                 validate: true  // set now returns true or false
             });
@@ -146,6 +154,9 @@ define([
          */
         clickAddModal: function() {
             this.$('.text-error').addClass('hidden');
+            this.$("#add-modal .editor").wysiwyg();
+            this.$('a[title]').tooltip({container:'body'});
+
             this.$el.find("#add-modal").modal();
             this.$("#add-modal").on('shown', function() {
                 $(this).find("input.title").focus();
@@ -158,10 +169,12 @@ define([
         clickAddItem: function() {
             this.$('.text-error').addClass('hidden');  // hide error messages
             var title = this.$("input.title").val();
-            var description = this.$("textarea.description").val();
+            var goal = this.$("input.goal").val();
+            var description = this.$("div.description").html();
 
             this.collection.create({
                 title: title,
+                goal: goal,
                 description: description,
                 status: 'notdoing'
             }, {
@@ -176,8 +189,10 @@ define([
             });
 
             // Clear out input fields and focus title field.
+            // TODO: Only clear this out if add item went through.
             this.$("input.title").val('');
-            this.$("textarea.description").val('');
+            this.$("input.goal").val('');
+            this.$("div.description").html('');
             this.$("input.title").focus();
         }
     });

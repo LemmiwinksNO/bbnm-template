@@ -3,7 +3,9 @@
   "version": "0.0.1",
   "dependencies": {
     "almond": "~0.2.5",
-    "bootstrap.css": "~2.3.2",
-    "sass-bootstrap": "~2.3.2"
+    "sass-bootstrap": "~2.3.2",
+    "bootstrap-wysiwyg": "latest",
+    "jquery.hotkeys": "jeresig/jquery.hotkeys#~0.1.0",
+    "font-awesome": "~3.2.1"
   }
 }

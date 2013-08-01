@@ -8,12 +8,15 @@ require.config({
 
   paths: {
     "vendor": "../vendor",
-    'bootstrap': '../vendor/bower/bootstrap.css/js/bootstrap',
-    'templates': 'templates/templates'  // compiled jade templates
+    'bootstrap': '../vendor/bootstrap/js/bootstrap',
+    'templates': 'templates/templates',  // compiled jade templates
+    'hotkeys': '../vendor/bower/jquery.hotkeys/jquery.hotkeys',
+    'wysiwyg': '../vendor/bower/bootstrap-wysiwyg/bootstrap-wysiwyg'
   },
 
   shim: {
-    'bootstrap': ['jquery']
+    'bootstrap': ['jquery'],
+    'wysiwyg': ['jquery', 'hotkeys', 'bootstrap']
   },
 
   map: {

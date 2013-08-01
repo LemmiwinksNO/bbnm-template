@@ -10,6 +10,7 @@ div.row
   div.span4.column.done
     h2 Done
     ul.unstyled
+    #editor
 
 //- Add Modal
 div#add-modal.modal.hide.fade(tabindex="-1", role="dialog",
@@ -20,8 +21,24 @@ div#add-modal.modal.hide.fade(tabindex="-1", role="dialog",
   div.modal-body
     div.text-error.hidden
     form
-      input.title.span5(type="text", placeholder="Title")
-      textarea.description.span5(rows="3", placeholder="Description")
+      input.title.span6(type="text", placeholder="Title")
+      input.goal.span6(type="text", placeholder="Goal")
+      div.btn-toolbar(data-role="editor-toolbar", data-target="#editor")
+        div.btn-group
+          a.btn(data-edit="bold") <i class="icon-bold"></i>
+          a.btn(data-edit="italic") <i class="icon-italic"></i>
+          a.btn(data-edit="underline") <i class="icon-underline"></i>
+        div.btn-group
+          a.btn(data-edit="insertunorderedlist", data-original-title="Bullet list") <i class="icon-list-ul"></i>
+          a.btn(data-edit="insertorderedlist") <i class="icon-list-ol"></i>
+          a.btn(data-edit="indent") <i class="icon-indent-right"></i>
+          a.btn(data-edit="outdent") <i class="icon-indent-left"></i>
+        div.btn-group
+          a.btn(data-edit="justifyleft") <i class="icon-align-left"></i>
+          a.btn(data-edit="justifycenter") <i class="icon-align-center"></i>
+          a.btn(data-edit="justifyright") <i class="icon-align-right"></i>
+          a.btn(data-edit="justifyfull") <i class="icon-align-justify"></i>
+      div.editor.description
   div.modal-footer
     button.btn(data-dismiss="modal", aria-hidden="true") Close
     button#add-item.btn.btn-primary Add Item
@@ -31,12 +48,28 @@ div#edit-modal.modal.hide.fade(tabindex="-1", role="dialog",
               aria-labelledby="edit-modal-label", aria-hidden="true")
   div.modal-header
     button.close(type="button", data-dismiss="modal", aria-hidden="true") x
-    h3#edit-modal-label Add Item
+    h3#edit-modal-label Edit Item
   div.modal-body
     div.text-error.hidden
     form
-      input.title.span5(type="text", placeholder="Title")
-      textarea.description.span5(rows="3", placeholder="Description")
+      input.title.span6(type="text", placeholder="Title")
+      input.goal.span6(type="text", placeholder="Goal")
+      div.btn-toolbar(data-role="editor-toolbar", data-target="#editor")
+        div.btn-group
+          a.btn(data-edit="bold") <i class="icon-bold"></i>
+          a.btn(data-edit="italic") <i class="icon-italic"></i>
+          a.btn(data-edit="underline") <i class="icon-underline"></i>
+        div.btn-group
+          a.btn(data-edit="insertunorderedlist", data-original-title="Bullet list") <i class="icon-list-ul"></i>
+          a.btn(data-edit="insertorderedlist") <i class="icon-list-ol"></i>
+          a.btn(data-edit="indent") <i class="icon-indent-right"></i>
+          a.btn(data-edit="outdent") <i class="icon-indent-left"></i>
+        div.btn-group
+          a.btn(data-edit="justifyleft") <i class="icon-align-left"></i>
+          a.btn(data-edit="justifycenter") <i class="icon-align-center"></i>
+          a.btn(data-edit="justifyright") <i class="icon-align-right"></i>
+          a.btn(data-edit="justifyfull") <i class="icon-align-justify"></i>
+      div.editor.description
   div.modal-footer
     button.btn(data-dismiss="modal", aria-hidden="true") Close
     button#save-item.btn.btn-primary Save Item
