@@ -37,15 +37,5 @@
     "chai": "~1.7.2",
     "chai-jquery": "~1.1.1",
     "request": "~2.22.0"
-  },
-  "jam": {
-    "packageDir": "./vendor/jam",
-    "baseUrl": "./app",
-    "dependencies": {
-      "backbone": "~1.0.0",
-      "lodash": "~1.2.0",
-      "jquery": "~2.0.0",
-      "backbone.layoutmanager": "~0.8.7"
-    }
   }
 }
