@@ -1,0 +1,31 @@
+* {
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+    outline: none;
+}
+
+@mixin radius($top-left: null, $top-right: null, $bottom-right: null, $bottom-left: null) {
+    border-radius: $top-left $top-right $bottom-right $bottom-left;
+    -webkit-border-radius: $top-left $top-right $bottom-right $bottom-left;
+    -moz-border-radius: $top-left $top-right $bottom-right $bottom-left;
+}
+
+@mixin shadow($h-shadow, $v-shadow, $blur: null, $spread: null, $color: null, $inset: null){
+    box-shadow: $h-shadow $v-shadow $blur $spread $color $inset;
+    -webkit-box-shadow: $h-shadow $v-shadow $blur $spread $color $inset;
+    -moz-box-shadow: $h-shadow $v-shadow $blur $spread $color $inset;
+}
+
+@mixin boxSizing($type){
+    box-sizing: $type;
+    -webkit-box-sizing: $type;
+    -moz-box-sizing: $type;
+}
+
+.ellipsis {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    // width: 100%;
+}

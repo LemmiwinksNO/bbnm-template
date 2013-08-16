@@ -6,6 +6,7 @@
     "sass-bootstrap": "~2.3.2",
     "bootstrap-wysiwyg": "latest",
     "jquery.hotkeys": "jeresig/jquery.hotkeys#~0.1.0",
-    "font-awesome": "~3.2.1"
+    "font-awesome": "~3.2.1",
+    "marionette": "~1.1.0"
   }
 }

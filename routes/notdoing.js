@@ -7,9 +7,8 @@ var notdoing = function(app, mongoose) {
     title: { type: String, required: true },
     goal: String,
     description: String,
-    status: String,
-    updated: { type: Date, default: Date.now },
-    completed: Date
+    status: { type: String, required: true },  // could also make this match one of the 5 possibilities
+    updated: { type: Date, default: Date.now }
   });
   var NotDo = mongoose.model('NotDo', notDoSchema);
 
@@ -36,17 +35,31 @@ var notdoing = function(app, mongoose) {
     });
   });
 
+  // app.put('/api/notdoing/:id', function(req, res){
+  //   NotDo.findById(req.params.id, function(err, notdo) {
+  //     notdo.title = req.body.title;
+  //     notdo.goal = req.body.goal;
+  //     notdo.description = req.body.description;
+  //     notdo.save(function(err) {
+  //       if (!err) {
+  //         console.log("updated");
+  //         res.send(notdo);
+  //       }
+  //     });
+  //   });
+  // });
+
+  // Put that uses a single query
   app.put('/api/notdoing/:id', function(req, res){
-    NotDo.findById(req.params.id, function(err, notdo) {
-      notdo.title = req.body.title;
-      notdo.goal = req.body.goal;
-      notdo.description = req.body.description;
-      notdo.save(function(err) {
-        if (!err) {
+    NotDo.findByIdAndUpdate(req.params.id, { $set: {
+      title: req.body.title,
+      goal: req.body.goal,
+      description: req.body.description
+      }}, function(err, notdo){
+        if (!err){
           console.log("updated");
           res.send(notdo);
         }
-      });
     });
   });
 

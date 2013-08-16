@@ -21,11 +21,14 @@ define([
 
         tagName: "li",
 
+        className: "box-section",
+
         template: "notdoing/item",
 
         events: {
-            'click .edit-item': 'clickEdit',
-            'click .delete-item': 'clickDelete'
+            'click': 'clickEdit'
+            // 'click .edit-item': 'clickEdit'
+            // 'click .delete-item': 'clickDelete'
         },
 
         // serialize is what goes to your template
@@ -43,7 +46,6 @@ define([
          * Load up edit modal.
          */
         clickEdit: function() {
-            console.log(this.$el);
             // Fill inputs and description
             $("#edit-modal input.title").val(this.model.get("title"));
             $("#edit-modal input.goal").val(this.model.get("goal"));
@@ -62,6 +64,11 @@ define([
             $("#edit-modal #save-item").click(function(){
                 this.clickSave();
             }.bind(this));
+
+            // Make delete button work
+            $("#edit-modal #delete-item").click(function(){
+                this.clickDelete();
+            }.bind(this));
         },
 
         /**
@@ -78,12 +85,15 @@ define([
 
             if (valid){
                 this.model.save();
+                $("#edit-modal").modal('hide');
             }
         },
 
         clickDelete: function() {
+            console.log("clickDelete");
             this.model.destroy();
             this.$el.remove();
+            $("#edit-modal").modal('hide');
         },
 
         remove: function() {
@@ -133,7 +143,7 @@ define([
          */
         addOne: function(notdo) {
             if (notdo.isValid()) {
-                var selector = "." + notdo.get("status") + " ul";
+                var selector = "." + notdo.get("status") + " ul.items";
                 this.insertView(selector, new Views.Item({
                     model: notdo
                 })).render();

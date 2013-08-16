@@ -1,5 +1,8 @@
 /dist/
 /node_modules/
-/.sass-cache
-/app/styles/scss/.sass-cache
-app/styles/scss/.sass-cache
+/.sass-cache/
+/app/styles/scss/.sass-cache/
+app/styles/scss/.sass-cache/
+*.scssc
+/vendor/bower/
+/vendor/jam/

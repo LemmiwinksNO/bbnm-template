@@ -1,16 +1,47 @@
+h1(style="text-align:center") Not Doing List
 div.row
-  div.span4.column.notdoing
-    h2 Not Doing
-      span
-        i#add-item-modal.icon-plus
-    ul.unstyled
-  div.span4.column.doing
-    h2 Doing
-    ul.unstyled
-  div.span4.column.done
-    h2 Done
-    ul.unstyled
-    #editor
+  div.span4
+    div.box.column.notdoing
+      div.box-header
+        span.icon
+          i.icon-file
+        span.title Not Doing
+        ul.box-toolbar
+          li
+            i#add-item-modal.icon-plus
+      div.box-content.scrollable
+        ul.items
+  div.span4
+    div.box
+      div.box-header
+        span.icon
+          i.icon-file
+        span.title Doing
+        ul.box-toolbar
+      div.box-content.scrollable
+        ul.items
+  div.span4
+    div.box
+      div.box-header
+        span.icon
+          i.icon-file
+        span.title Done
+        ul.box-toolbar
+      div.box-content.scrollable
+        ul.items
+
+
+  //- div.span4.column.notdoing
+  //-   h2 Not Doing
+  //-     span
+  //-       i#add-item-modal.icon-plus
+  //-   ul.unstyled
+  //- div.span4.column.doing
+  //-   h2 Doing
+  //-   ul.unstyled
+  //- div.span4.column.done
+  //-   h2 Done
+  //-   ul.unstyled
 
 //- Add Modal
 div#add-modal.modal.hide.fade(tabindex="-1", role="dialog",
@@ -21,8 +52,8 @@ div#add-modal.modal.hide.fade(tabindex="-1", role="dialog",
   div.modal-body
     div.text-error.hidden
     form
-      input.title.span6(type="text", placeholder="Title")
-      input.goal.span6(type="text", placeholder="Goal")
+      input.title.span5(type="text", placeholder="Title")
+      input.goal.span5(type="text", placeholder="Goal")
       div.btn-toolbar(data-role="editor-toolbar", data-target="#editor")
         div.btn-group
           a.btn(data-edit="bold") <i class="icon-bold"></i>
@@ -52,8 +83,8 @@ div#edit-modal.modal.hide.fade(tabindex="-1", role="dialog",
   div.modal-body
     div.text-error.hidden
     form
-      input.title.span6(type="text", placeholder="Title")
-      input.goal.span6(type="text", placeholder="Goal")
+      input.title.span5(type="text", placeholder="Title")
+      input.goal.span5(type="text", placeholder="Goal")
       div.btn-toolbar(data-role="editor-toolbar", data-target="#editor")
         div.btn-group
           a.btn(data-edit="bold") <i class="icon-bold"></i>
@@ -72,4 +103,6 @@ div#edit-modal.modal.hide.fade(tabindex="-1", role="dialog",
       div.editor.description
   div.modal-footer
     button.btn(data-dismiss="modal", aria-hidden="true") Close
+    button.move-item.btn.btn-success Move Item
+    button#delete-item.btn.btn-danger Delete Item
     button#save-item.btn.btn-primary Save Item

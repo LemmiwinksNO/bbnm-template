@@ -1,7 +1,21 @@
-.item.span4
-  div.title.span3
-    strong #{model.get('title')}
-  button.btn.edit-item
-    i.icon-edit
-  button.btn.delete-item
-    i.icon-trash
+div.item-tools-left
+div.item-tools-right
+  //- button.btn.edit-item
+    //- i.icon-edit
+  //- button.btn.delete-item
+  //-   i.icon-trash
+div.item-content
+  div.title.ellipsis #{model.get('title')}
+  div.text !{model.get('description')}
+  //- button.btn.btn-success.btn-mini.edit-item Edit
+  //- button.btn.btn-danger.btn-mini.delete-item Delete
+
+
+//- div.item.span4
+//-   div.title.span3
+//-     strong #{model.get('title')}
+//-   div.toolbar.span3
+//-       button.btn.edit-item
+//-         i.icon-edit
+//-       button.btn.delete-item
+//-         i.icon-trash

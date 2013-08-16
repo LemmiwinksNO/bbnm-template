@@ -2,12 +2,13 @@
 html
   head
     title= "Growth App"
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
 
     //- Development
     link(rel='stylesheet', href='/app/styles/index.css')
     script(data-main='app/main', src='vendor/jam/require.js')
 
-    //- Production (I don't know css doesn't work like source.js)
+    //- Production (I don't know why css doesn't work like source.js)
     //- link(rel='stylesheet', href='/dist/release/app/styles/index.css')
     //- script(data-main='app/main', src='/source.js')
 
