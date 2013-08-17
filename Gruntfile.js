@@ -3,61 +3,22 @@
 module.exports = function(grunt) {
 
   grunt.initConfig({
-    // Easier location to change the default debug and release folders.
-    dist: {
-      debug: "dist/debug/",
-      release: "dist/release/"
-    },
+
+    // Empty and remove 'dist/' directory
+    clean: ["dist/"],
 
     // Runs the application JavaScript through JSHint with the defaults.
     jshint: {
       files: ["app/*.js", "app/modules/**/*.js"]
     },
 
-    // The jst task compiles all application templates into JavaScript
-    // functions with the Lo-Dash template function.
-    jst: {
-      debug: {
-        files: {
-          "<%= dist.debug %>templates.js": ["app/templates/**/*.*"]
-        }
-      }
-    },
-
-    // NOTE: Don't need this with the way we are using sass.
-    // This task simplifies working with CSS inside Backbone Boilerplate
-    // projects.  Instead of manually specifying your stylesheets inside the
-    // ration, you can use `@imports` and this task will concatenate
-    // only those paths.
-    styles: {
-      // Out the concatenated contents of the following styles into the below
-      // development file path.
-      "<%= dist.debug %>app/styles/index.css": {
-        // Point this to where your `index.css` file is location.
-        src: "app/styles/index.css",
-
-        // The relative path to use for the @imports.
-        paths: ["app/styles"],
-
-        // Point to where styles live.
-        prefix: "app/styles/",
-
-        // Additional production-only stylesheets here.
-        additional: []
-      }
-    },
-
     // This task uses James Burke's excellent r.js AMD builder to take all
     // modules and concatenate them into a single file.
     requirejs: {
-      debug: {
-        // Merge the Jam ration options into the output build.
+      release: {
         options: {
           // Include the main ration file.
           mainConfigFile: "app/config.js",
-
-          // Output file.
-          out: "<%= dist.debug %>source.js",
 
           // Root application module.
           name: "config",
@@ -65,11 +26,23 @@ module.exports = function(grunt) {
           // Include the main application.
           insertRequire: ["main"],
 
-          // This will ensure the application runs after being built.
-          include: ["app", "main", "router"],
+          // This includes main.js in the output file.
+          include: ["main"],
+
+          // This finds all of main's dependencies and so on and adds them.
+          findNestedDependencies: true,
 
           // Wrap everything in an IIFE.
-          wrap: true
+          wrap: true,
+
+          // We minify it later.
+          optimize: "none",
+
+          // I turn this off because supposedly it messes up source maps
+          preserveLicenseComments: false,
+
+          // Output file.
+          out: "dist/source.js"
         }
       }
     },
@@ -80,11 +53,11 @@ module.exports = function(grunt) {
       dist: {
         src: [
           "vendor/bower/almond/almond.js",
-          "<%= dist.debug %>templates.js",
-          "<%= dist.debug %>source.js"
+          "app/templates/templates.js",
+          "dist/source.js"
         ],
 
-        dest: "<%= dist.debug %>source.js",
+        dest: "dist/source.js",
 
         separator: ";"
       }
@@ -97,8 +70,8 @@ module.exports = function(grunt) {
     cssmin: {
       release: {
         files: {
-          "<%= dist.release %>app/styles/index.css": [
-            "<%= dist.debug %>app/styles/index.css"
+          "dist/index.css": [
+            "app/styles/index.css"
           ]
         }
       }
@@ -108,7 +81,7 @@ module.exports = function(grunt) {
     // the original debug build.
     uglify: {
       options: {
-        sourceMap: "<%= dist.release %>source.js.map",
+        sourceMap: "dist/source.js.map",
         sourceMapRoot: "",
         sourceMapPrefix: 1,
         preserveComments: "some"
@@ -116,34 +89,29 @@ module.exports = function(grunt) {
 
       release: {
         files: {
-          "<%= dist.release %>source.js": ["<%= dist.debug %>source.js"]
+          "dist/source.min.js": ["dist/source.js"]
         }
       }
     },
 
-    // The clean task ensures all files are removed from the dist/ directory so
-    // that no files linger from previous builds.
-    clean: ["dist/"],
-
     // Move vendor and app logic during a build.
     copy: {
-      debug: {
-        files: [
-          { src: ["app/**"], dest: "<%= dist.debug %>" },
-          { src: "vendor/**", dest: "<%= dist.debug %>" },
-          // { src: "index.html", dest: "<%= dist.debug %>index.html" },
-          { src: "views/**", dest: "<%= dist.debug %>"}
-        ]
-      },
-
       release: {
         files: [
-          { src: ["app/**"], dest: "<%= dist.release %>" },
-          { src: "vendor/**", dest: "<%= dist.release %>" },
-          // { src: "index.html", dest: "<%= dist.release %>index.html" },
-          { src: "views/**", dest: "<%= dist.release %>"},
-          { src: "<%= dist.debug %>source.js", dest: "<%= dist.release %>debug/source.js" }
+          { src: ["app/**"], dest: "dist/" },
+          { src: "vendor/**", dest: "dist/" },
+          { src: "views/**", dest: "dist/"}
+          // { src: "<%= dist.debug %>source.js", dest: "dist/debug/source.js" },
         ]
+      }
+    },
+
+    // Copy over index.html to dist/release and change it for production
+    processhtml: {
+      release: {
+        files: {
+          "dist/index.html": ["index.html"]
+        }
       }
     },
 
@@ -186,6 +154,7 @@ module.exports = function(grunt) {
       }
     },
 
+    // Turn jade templates into javascript functions.
     jade2js: {
       dev: {
         options: {
@@ -197,18 +166,6 @@ module.exports = function(grunt) {
         },
         files: {
           'app/templates/templates.js': 'app/templates/**/*.jade'
-        }
-      },
-      debug: {
-        options: {
-          namespace: 'JST',
-          processName: function(filename){
-            return filename;
-          },
-          includeRuntime: true
-        },
-        files: {
-          "<%= dist.debug %>templates.js": 'app/templates/**/*.jade'
         }
       }
     }
@@ -225,26 +182,18 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks("grunt-contrib-copy");
   grunt.loadNpmTasks("grunt-contrib-watch");
   grunt.loadNpmTasks('grunt-contrib-sass');
+  grunt.loadNpmTasks('grunt-contrib-requirejs');
+
+  // Third-party tasks
   grunt.loadNpmTasks('grunt-jade-plugin');
   grunt.loadNpmTasks("grunt-shell");
-
-  // Third-party tasks.
+  grunt.loadNpmTasks("grunt-processhtml");
   // grunt.loadNpmTasks("grunt-karma");
 
-  // Grunt BBB tasks.
-  // grunt.loadNpmTasks("grunt-bbb-server");
-  grunt.loadNpmTasks("grunt-bbb-requirejs");
-  // grunt.loadNpmTasks("grunt-bbb-styles");
-
-  // This will reset the build, be the precursor to the production
-  // optimizations, and serve as a good intermediary for debugging.
-  grunt.registerTask("debug", [ // I cut out styles.
-    "clean", "jshint", "jade2js:debug", "requirejs", "concat", "copy"
+  // Do everything it takes to build production version
+  grunt.registerTask("release", [
+    "clean", "jshint", "processhtml", "requirejs", "concat", "copy", "uglify", "cssmin"
   ]);
-
-  // The release task will first run the debug tasks.  Following that, minify
-  // the built JavaScript and then minify the built CSS.
-  grunt.registerTask("release", ["debug", "uglify", "cssmin"]);
 
   // When running the default Grunt command, just lint the code.
   grunt.registerTask("default", ["jshint"]);
@@ -259,5 +208,4 @@ module.exports = function(grunt) {
     require("./server.js");
     grunt.task.run(['shell:mocha-phantomjs']);
   });
-
 };

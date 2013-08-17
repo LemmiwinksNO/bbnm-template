@@ -5,7 +5,8 @@
 
 var index = function(app){
   app.get('/', function(req, res){
-    res.render('index');
+    // res.render('index');
+    res.sendfile(__dirname + '../index.html');
   });
 };
 

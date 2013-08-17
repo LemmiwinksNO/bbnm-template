@@ -15,8 +15,6 @@ function(app, NotDoing){
 
             // Set layout
             app.useLayout("main-layout").render();
-
-
         },
 
         routes: {
